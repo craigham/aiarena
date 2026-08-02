@@ -20,6 +20,7 @@ export default function Rounds({ bot, matches, ranking, opponents }) {
     }
   }, [isFlipped]);
 
+  const showFlipped = SmallScreen || isFlipped;
   const style = { margin: "0px", padding: "1px", textAlign: "center" };
   const bots = new Map();
 
@@ -52,7 +53,7 @@ export default function Rounds({ bot, matches, ranking, opponents }) {
   }
 
   const opponentNames = [...bots.values()].filter(info => (info.count > 0)).sort((a, b) => (a.elo - b.elo)).map(info => info.opponent);
-  if (!SmallScreen) opponentNames.reverse();
+  if (!showFlipped) opponentNames.reverse();
 
   const roundsList = [];
 
@@ -80,7 +81,7 @@ export default function Rounds({ bot, matches, ranking, opponents }) {
   const cols = [];
   const rows = [];
 
-  if (SmallScreen || isFlipped) {
+  if (showFlipped) {
     // Rows are rounds. Columns are opponents.
     for (const round of roundsList) {
       rows.push(

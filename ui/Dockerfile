@@ -4,7 +4,7 @@ FROM node:20 AS build
 WORKDIR /app
 
 COPY ./package.json .
-RUN npm install
+COPY ./node_modules ./node_modules
 
 COPY ./public ./public
 COPY ./src ./src

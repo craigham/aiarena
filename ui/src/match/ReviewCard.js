@@ -13,7 +13,11 @@ export default function ReviewCard({ review }) {
       narrative.push(
         <div key={ index++ }>
           <strong>[{ one.start }-{ one.end }]: { one.phase }</strong><br />
-          <div className="match-review-card-details">{ one.description }<br />Aggressor: { one.aggressor }<br />{ one.evidence }</div>
+          <div className="match-review-card-details">
+            { one.description }<br />
+            Aggressor: { one.aggressor }<br />
+            Evidence: { one.evidence }
+          </div>
         </div>
       );
     }

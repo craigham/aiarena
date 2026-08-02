@@ -6,11 +6,8 @@ const LOOPS_PER_MINUTE = LOOPS_PER_SECOND * 60;
 
 const models = [
   "gemini-3.1-flash-lite-preview",
-  "gemma-3-27b-it",
-  "gemma-3-12b-it",
-  "gemma-3-4b-it",
-  "gemma-3-2b-it",
-  "gemma-3-1b-it",
+  "gemma-4-31b-it",
+  "gemma-4-26b-a4b-it",
 ];
 const gemini = new GoogleGenAI({ apiKey: fs.readFileSync("./secrets/GOOGLE_API_KEY", "utf8") });
 const prompt = fs.readFileSync("./src/timeline/summary.prompt", "utf8");
