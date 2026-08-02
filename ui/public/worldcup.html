@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Arena World Cup 2026</title>
+  <style>
+    :root {
+      --bg-dark: #0a0e1a;
+      --bg-panel: #0f1520;
+      --bg-card: #141c2e;
+      --accent-blue: #1e90ff;
+      --accent-cyan: #00d4ff;
+      --accent-gold: #ffd700;
+      --accent-orange: #ff8c00;
+      --text-primary: #e8eaf6;
+      --text-secondary: #8fa3c0;
+      --text-dim: #4a6080;
+      --border: #1e3050;
+      --group-a: #1a3a5c;
+      --group-b: #1a4a3a;
+      --win: #2ecc71;
+      --loss: #e74c3c;
+      --tie: #f39c12;
+      --unplayed: #2a3a50;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ─────────────────────────────────────────── */
+    header {
+      background: linear-gradient(180deg, #050810 0%, #0a0e1a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      padding: 40px 40px 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .trophy-wrap {
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.4));
+    }
+
+    .trophy-wrap img {
+      width: 160px;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+    }
+
+    .header-text {
+      text-align: left;
+    }
+
+    .tournament-label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #ffd700 0%, #ff8c00 50%, #ff4500 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+      letter-spacing: 1px;
+    }
+
+    .stars {
+      display: flex;
+      gap: 6px;
+      margin-top: 16px;
+    }
+
+    .star {
+      width: 18px; height: 18px;
+      background: var(--accent-gold);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    }
+
+    /* ── MAIN LAYOUT ───────────────────────────────────── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    section { margin-bottom: 60px; }
+
+    .section-title {
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+    }
+
+    /* ── TOURNAMENT OVERVIEW ─────────────────────────── */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-tile {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-tile .value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent-gold);
+    }
+
+    .stat-tile .label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* ── RULES ────────────────────────────────────────── */
+    .rules-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .rule-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .rule-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+      line-height: 1.4;
+    }
+
+    .rule-title {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      margin-bottom: 6px;
+    }
+
+    .rule-body {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .rule-body a {
+      color: var(--accent-blue);
+      text-decoration: none;
+    }
+
+    .rule-body a:hover { text-decoration: underline; }
+
+    /* ── REGISTERED TEAMS ─────────────────────────────── */
+    .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .team-slot {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+    }
+
+    .team-slot.filled {
+      border-color: var(--accent-blue);
+      background: linear-gradient(135deg, #0d1b3e 0%, var(--bg-card) 100%);
+    }
+
+    .team-slot.empty {
+      border-style: dashed;
+      border-color: #3a5a80;
+      opacity: 1;
+    }
+
+    .slot-number {
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+    }
+
+    .team-flag {
+      font-size: 32px;
+      line-height: 1;
+    }
+
+    .team-name {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      text-align: center;
+    }
+
+    .team-bots {
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+
+    .team-bots a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+    }
+
+    .team-bots a:hover { text-decoration: underline; }
+
+    .empty-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .register-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, var(--accent-blue) 0%, #1565c0 100%);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: opacity 0.2s;
+    }
+
+    .register-btn:hover { opacity: 0.85; }
+
+    /* ── GROUP STAGE ──────────────────────────────────── */
+    .groups-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .group-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .group-header {
+      padding: 14px 20px;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .group-header.a {
+      background: linear-gradient(90deg, #1a3a5c 0%, #0f1a30 100%);
+      border-bottom: 2px solid var(--accent-blue);
+      color: var(--accent-cyan);
+    }
+
+    .group-header.b {
+      background: linear-gradient(90deg, #1a4a3a 0%, #0f1e18 100%);
+      border-bottom: 2px solid #00c08a;
+      color: #00e8a8;
+    }
+
+    .group-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .group-table th {
+      padding: 8px 10px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .group-table th:first-child { text-align: left; padding-left: 16px; }
+
+    .group-table td {
+      padding: 10px;
+      font-size: 13px;
+      text-align: center;
+      border-bottom: 1px solid rgba(30, 48, 80, 0.5);
+    }
+
+    .group-table tr:last-child td { border-bottom: none; }
+
+    .group-table td:first-child {
+      text-align: left;
+      padding-left: 16px;
+    }
+
+    .group-table tr.qualifier td:first-child {
+      border-left: 3px solid var(--accent-gold);
+    }
+
+    .team-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .team-flag-sm { font-size: 18px; line-height: 1; }
+
+    .team-name-sm {
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+    }
+
+    .pts { font-weight: 700; color: var(--accent-gold); font-size: 14px; }
+
+    .match-circle {
+      display: inline-block;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid var(--unplayed);
+      background: var(--unplayed);
+      vertical-align: middle;
+    }
+
+    .match-circle.w { background: var(--win); border-color: var(--win); }
+    .match-circle.l { background: var(--loss); border-color: var(--loss); }
+    .match-circle.d { background: var(--tie); border-color: var(--tie); }
+
+    .matches-cell { display: flex; gap: 4px; justify-content: center; }
+
+    /* ── SCHEDULE ─────────────────────────────────────── */
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .schedule-day {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+
+    .schedule-date {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      margin-bottom: 10px;
+    }
+
+    .schedule-round {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-gold);
+      margin-bottom: 6px;
+    }
+
+    .schedule-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ── ELIMINATION BRACKET ──────────────────────────── */
+    .bracket-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 32px;
+      overflow-x: auto;
+    }
+
+    svg.bracket {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+    }
+
+    .match-box rect {
+      fill: #141c2e;
+      stroke: #1e3050;
+      stroke-width: 1;
+      rx: 4;
+    }
+
+    .match-box text {
+      fill: var(--text-secondary);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 12px;
+    }
+
+    .match-box text.team { fill: #cdd6e8; }
+    .match-box text.date { fill: #4a6080; font-size: 10px; }
+    .match-box text.label { fill: #00d4ff; font-size: 10px; letter-spacing: 2; }
+
+    footer {
+      text-align: center;
+      padding: 32px 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    footer a { color: var(--accent-blue); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════════ -->
+<header>
+  <div class="header-inner">
+    <div class="trophy-wrap">
+      <img src="worldcup.webp" alt="AI Arena World Cup Trophy" />
+    </div>
+    <div class="header-text">
+      <h1>AI Arena<br>World Cup</h1>
+      <div class="subtitle">2026 &nbsp;·&nbsp; Played on UltraloveAIE_v2 &nbsp;·&nbsp; StarCraft II</div>
+      <div class="stars">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ══ OVERVIEW TILES ═════════════════════════════════ -->
+  <div class="overview-grid">
+    <div class="stat-tile">
+      <div class="value">8</div>
+      <div class="label">Nations</div>
+    </div>
+    <div class="stat-tile">
+      <div class="value">2</div>
+      <div class="label">Groups</div>
+    </div>
+    <div class="stat-tile">
+      <div class="value">UltraloveAIE_v2</div>
+      <div class="label">Host Map</div>
+    </div>
+  </div>
+
+  <!-- ══ TOURNAMENT REGULATIONS ═════════════════════════ -->
+  <section id="rules">
+    <div class="section-title">Tournament Regulations</div>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="rule-icon">🌍</div>
+        <div>
+          <div class="rule-title">National Squads</div>
+          <div class="rule-body">
+            Each nation may field multiple bots in its squad.
+            Bot authors register their bots on Discord to join a national squad.
+            Each bot represents exactly one national team. National squads are seeded
+            by the Elo rating of their highest-ranked registered bot.
+            <br><br>
+            <a href="https://discord.com/channels/350289306763657218/1526499148705042484" target="_blank">&#128279; Register your bot on Discord</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rule-card">
+        <div class="rule-icon">⚽</div>
+        <div>
+          <div class="rule-title">Group Stage</div>
+          <div class="rule-body">
+            All eight nations are drawn into two groups of four.
+            Every nation plays each of the other three nations in the group once —
+            three fixtures in total. Scoring: <strong>3 points</strong> for a victory,
+            <strong>1 point</strong> for a draw, <strong>0 points</strong> for a defeat.
+            The top two nations in each group advance to the knockout stage.
+            Where two nations are level on points, the higher Elo rating serves as the tiebreaker.
+          </div>
+        </div>
+      </div>
+
+      <div class="rule-card">
+        <div class="rule-icon">🏆</div>
+        <div>
+          <div class="rule-title">Knockout Stage</div>
+          <div class="rule-body">
+            The knockout stage opens with the Semi-finals, contested by the four group-stage
+            qualifiers. The two Semi-final winners meet in the Grand Final to determine
+            the inaugural AI Arena World Champion.
+          </div>
+        </div>
+      </div>
+
+      <div class="rule-card">
+        <div class="rule-icon">🗺️</div>
+        <div>
+          <div class="rule-title">Match Conditions</div>
+          <div class="rule-body">
+            All fixtures — group stage and knockout — are contested on
+            <strong>UltraloveAIE_v2</strong>, the official map of this tournament.
+            All matches are played on the <strong>AI Arena</strong> ladder platform.
+            For each match, a nation may nominate any bot from its squad to play.
+            If no bot is nominated, a random squad member is selected automatically.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ REGISTERED NATIONS ═════════════════════════════ -->
+  <section id="nations">
+    <div class="section-title">Registered Nations</div>
+    <div class="teams-grid">
+
+      <!-- Slot 1 — Netherlands (ELO 2020) -->
+      <div class="team-slot filled">
+        <span class="slot-number">#1</span>
+        <div class="team-flag">
+          <img src="https://flagcdn.com/48x36/nl.png" alt="Netherlands" style="display:block;border-radius:4px;"/>
+        </div>
+        <div class="team-name">Netherlands</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 4px;margin-top:2px;">
+          <span style="font-size:11px;color:var(--accent-gold);letter-spacing:1px;">ELO 2020</span>
+          <span class="team-bots">
+            <a href="https://aiarena.net/bots/732/" target="_blank">GPT</a>,
+            <a href="https://aiarena.net/bots/167/" target="_blank">TyrT</a>
+          </span>
+        </div>
+      </div>
+
+      <!-- Slot 2 — France (ELO 1939) -->
+      <div class="team-slot filled">
+        <span class="slot-number">#2</span>
+        <div class="team-flag">
+          <img src="https://flagcdn.com/48x36/fr.png" alt="France" style="display:block;border-radius:4px;"/>
+        </div>
+        <div class="team-name">France</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 4px;margin-top:2px;">
+          <span style="font-size:11px;color:var(--accent-gold);letter-spacing:1px;">ELO 1939</span>
+          <span class="team-bots"><a href="https://aiarena.net/bots/797/" target="_blank">WickedBot</a></span>
+        </div>
+      </div>
+
+      <!-- Slot 3 — USA (ELO 1931) -->
+      <div class="team-slot filled">
+        <span class="slot-number">#3</span>
+        <div class="team-flag">
+          <img src="https://flagcdn.com/48x36/us.png" alt="USA" style="display:block;border-radius:4px;"/>
+        </div>
+        <div class="team-name">USA</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 4px;margin-top:2px;">
+          <span style="font-size:11px;color:var(--accent-gold);letter-spacing:1px;">ELO 1931</span>
+          <span class="team-bots">
+            <a href="https://aiarena.net/bots/759/" target="_blank">BotTato</a>,
+            <a href="https://aiarena.net/bots/970/" target="_blank">TheLAW</a>
+          </span>
+        </div>
+      </div>
+
+      <!-- Slot 4 — Australia (ELO 1826) -->
+      <div class="team-slot filled">
+        <span class="slot-number">#4</span>
+        <div class="team-flag">
+          <img src="https://flagcdn.com/48x36/au.png" alt="Australia" style="display:block;border-radius:4px;"/>
+        </div>
+        <div class="team-name">Australia</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 4px;margin-top:2px;">
+          <span style="font-size:11px;color:var(--accent-gold);letter-spacing:1px;">ELO 1826</span>
+          <span class="team-bots"><a href="https://aiarena.net/bots/1080/" target="_blank">JimmyBot</a></span>
+        </div>
+      </div>
+
+      <!-- Slot 5 — Bulgaria (ELO 1659) -->
+      <div class="team-slot filled">
+        <span class="slot-number">#5</span>
+        <div class="team-flag">
+          <img src="https://flagcdn.com/48x36/bg.png" alt="Bulgaria" style="display:block;border-radius:4px;"/>
+        </div>
+        <div class="team-name">Bulgaria</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 4px;margin-top:2px;">
+          <span style="font-size:11px;color:var(--accent-gold);letter-spacing:1px;">ELO 1659</span>
+          <span class="team-bots"><a href="https://aiarena.net/bots/518/" target="_blank">norman</a></span>
+        </div>
+      </div>
+
+      <!-- Slot 6 — Mexico (ELO 1579) -->
+      <div class="team-slot filled">
+        <span class="slot-number">#6</span>
+        <div class="team-flag">
+          <img src="https://flagcdn.com/48x36/mx.png" alt="Mexico" style="display:block;border-radius:4px;"/>
+        </div>
+        <div class="team-name">Mexico</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 4px;margin-top:2px;">
+          <span style="font-size:11px;color:var(--accent-gold);letter-spacing:1px;">ELO 1579</span>
+          <span class="team-bots"><a href="https://aiarena.net/bots/1214/" target="_blank">Slenderina</a></span>
+        </div>
+      </div>
+
+      <!-- Slot 7 — Taiwan (ELO 1551) -->
+      <div class="team-slot filled">
+        <span class="slot-number">#7</span>
+        <div class="team-flag">
+          <img src="https://flagcdn.com/48x36/tw.png" alt="Taiwan" style="display:block;border-radius:4px;"/>
+        </div>
+        <div class="team-name">Taiwan</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 4px;margin-top:2px;">
+          <span style="font-size:11px;color:var(--accent-gold);letter-spacing:1px;">ELO 1551</span>
+          <span class="team-bots"><a href="https://aiarena.net/bots/708/" target="_blank">Princess-Mika</a></span>
+        </div>
+      </div>
+
+      <!-- Slot 8 — Spain (ELO 1474) -->
+      <div class="team-slot filled">
+        <span class="slot-number">#8</span>
+        <div class="team-flag">
+          <img src="https://flagcdn.com/48x36/es.png" alt="Spain" style="display:block;border-radius:4px;"/>
+        </div>
+        <div class="team-name">Spain</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 4px;margin-top:2px;">
+          <span style="font-size:11px;color:var(--accent-gold);letter-spacing:1px;">ELO 1474</span>
+          <span class="team-bots"><a href="https://aiarena.net/bots/943/" target="_blank">puck</a></span>
+        </div>
+      </div>
+
+    </div>
+
+    <a href="https://discord.com/channels/350289306763657218/1526499148705042484"
+       target="_blank" class="register-btn">
+      &#128279; &nbsp; Register Your Bot
+    </a>
+  </section>
+
+  <!-- ══ GROUP STAGE STANDINGS ══════════════════════════ -->
+  <section id="groups">
+    <div class="section-title">Group Stage</div>
+    <div class="groups-wrap">
+
+      <!-- GROUP A -->
+      <div class="group-panel">
+        <div class="group-header a">&#9733; Group A</div>
+        <table class="group-table">
+          <thead>
+            <tr>
+              <th>Nation</th>
+              <th title="Wins">W</th>
+              <th title="Losses">L</th>
+              <th title="Draws">D</th>
+              <th title="Points">Pts</th>
+              <th colspan="3" style="letter-spacing:1px;">Fixtures</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="qualifier">
+              <td>
+                <div class="team-cell">
+                  <img src="https://flagcdn.com/20x15/nl.png" alt="Netherlands" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/>
+                  <span class="team-name-sm">Netherlands</span>
+                </div>
+              </td>
+              <td>0</td><td>0</td><td>0</td>
+              <td class="pts">0</td>
+              <td><div class="matches-cell">
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+              </div></td>
+            </tr>
+            <tr class="qualifier">
+              <td>
+                <div class="team-cell">
+                  <img src="https://flagcdn.com/20x15/us.png" alt="USA" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/>
+                  <span class="team-name-sm">USA</span>
+                </div>
+              </td>
+              <td>0</td><td>0</td><td>0</td>
+              <td class="pts">0</td>
+              <td><div class="matches-cell">
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+              </div></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="team-cell">
+                  <img src="https://flagcdn.com/20x15/bg.png" alt="Bulgaria" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/>
+                  <span class="team-name-sm">Bulgaria</span>
+                </div>
+              </td>
+              <td>0</td><td>0</td><td>0</td>
+              <td class="pts">0</td>
+              <td><div class="matches-cell">
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+              </div></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="team-cell">
+                  <img src="https://flagcdn.com/20x15/tw.png" alt="Taiwan" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/>
+                  <span class="team-name-sm">Taiwan</span>
+                </div>
+              </td>
+              <td>0</td><td>0</td><td>0</td>
+              <td class="pts">0</td>
+              <td><div class="matches-cell">
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+              </div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- GROUP B -->
+      <div class="group-panel">
+        <div class="group-header b">&#9733; Group B</div>
+        <table class="group-table">
+          <thead>
+            <tr>
+              <th>Nation</th>
+              <th title="Wins">W</th>
+              <th title="Losses">L</th>
+              <th title="Draws">D</th>
+              <th title="Points">Pts</th>
+              <th colspan="3" style="letter-spacing:1px;">Fixtures</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="qualifier">
+              <td>
+                <div class="team-cell">
+                  <img src="https://flagcdn.com/20x15/fr.png" alt="France" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/>
+                  <span class="team-name-sm">France</span>
+                </div>
+              </td>
+              <td>0</td><td>0</td><td>0</td>
+              <td class="pts">0</td>
+              <td><div class="matches-cell">
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+              </div></td>
+            </tr>
+            <tr class="qualifier">
+              <td>
+                <div class="team-cell">
+                  <img src="https://flagcdn.com/20x15/au.png" alt="Australia" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/>
+                  <span class="team-name-sm">Australia</span>
+                </div>
+              </td>
+              <td>0</td><td>0</td><td>0</td>
+              <td class="pts">0</td>
+              <td><div class="matches-cell">
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+              </div></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="team-cell">
+                  <img src="https://flagcdn.com/20x15/mx.png" alt="Mexico" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/>
+                  <span class="team-name-sm">Mexico</span>
+                </div>
+              </td>
+              <td>0</td><td>0</td><td>0</td>
+              <td class="pts">0</td>
+              <td><div class="matches-cell">
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+              </div></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="team-cell">
+                  <img src="https://flagcdn.com/20x15/es.png" alt="Spain" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/>
+                  <span class="team-name-sm">Spain</span>
+                </div>
+              </td>
+              <td>0</td><td>0</td><td>0</td>
+              <td class="pts">0</td>
+              <td><div class="matches-cell">
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+                <span class="match-circle"></span>
+              </div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- Legend -->
+    <div style="margin-top:12px; display:flex; align-items:center; gap:20px; font-size:11px; color:var(--text-dim);">
+      <span><span class="match-circle" style="display:inline-block;vertical-align:middle;"></span> &nbsp;Not played</span>
+      <span><span class="match-circle w" style="display:inline-block;vertical-align:middle;"></span> &nbsp;Win</span>
+      <span><span class="match-circle d" style="display:inline-block;vertical-align:middle;"></span> &nbsp;Draw</span>
+      <span><span class="match-circle l" style="display:inline-block;vertical-align:middle;"></span> &nbsp;Loss</span>
+      <span style="margin-left:8px; padding-left:8px; border-left:1px solid var(--border);">
+        <span style="border-left:3px solid var(--accent-gold); padding-left:6px;">Qualifies to knockout stage</span>
+      </span>
+    </div>
+  </section>
+
+  <!-- ══ MATCH SCHEDULE ═════════════════════════════════ -->
+  <section id="schedule">
+    <div class="section-title">Match Schedule</div>
+    <div class="schedule-grid">
+      <div class="schedule-day">
+        <div class="schedule-date">22 August 2026</div>
+        <div class="schedule-round">Group Stage — Matchday 1</div>
+        <div class="schedule-desc">All eight nations make their tournament debut. Each group's first fixtures are contested across the day on UltraloveAIE_v2.</div>
+      </div>
+      <div class="schedule-day">
+        <div class="schedule-date">24 August 2026</div>
+        <div class="schedule-round">Group Stage — Matchday 2</div>
+        <div class="schedule-desc">The second round of group fixtures. Early leaders begin to emerge as the standings take shape.</div>
+      </div>
+      <div class="schedule-day">
+        <div class="schedule-date">26 August 2026</div>
+        <div class="schedule-round">Group Stage — Matchday 3</div>
+        <div class="schedule-desc">The final group fixtures. Two nations from each group secure their passage to the knockout stage.</div>
+      </div>
+      <div class="schedule-day">
+        <div class="schedule-date">28 August 2026</div>
+        <div class="schedule-round">Knockout Stage — Semi-finals</div>
+        <div class="schedule-desc">The four group-stage qualifiers contest the Semi-finals. Winners advance to the Grand Final; the dream continues for only two.</div>
+      </div>
+      <div class="schedule-day">
+        <div class="schedule-date">30 August 2026</div>
+        <div class="schedule-round">Grand Final</div>
+        <div class="schedule-desc">The two surviving nations contest the Grand Final on UltraloveAIE_v2. One nation will be crowned the inaugural AI Arena World Champion.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ELIMINATION BRACKET ════════════════════════════ -->
+  <section id="bracket">
+    <div class="section-title">Knockout Stage</div>
+    <div class="bracket-wrap">
+      <!--
+        Layout (left→right):
+          Semi-final 1  ─┐
+                          ├─ Grand Final
+          Semi-final 2  ─┘
+
+        Columns:   x=40 (SF1), x=320 (SF2), x=600 (Final)
+        Each match box: w=200 h=64
+        Team rows inside: y+18, y+46
+      -->
+      <svg class="bracket" width="840" height="260" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <style>
+            .mb-bg   { fill: #141c2e; stroke: #1e3050; stroke-width: 1; rx: 4; }
+            .mb-top  { fill: #0f1520; stroke: none; }
+            .lbl     { font: 600 9px/1 'Segoe UI', Arial, sans-serif; fill: #00d4ff; letter-spacing: 2px; text-transform: uppercase; }
+            .team    { font: 500 12px/1 'Segoe UI', Arial, sans-serif; fill: #cdd6e8; }
+            .date    { font: 400 10px/1 'Segoe UI', Arial, sans-serif; fill: #4a6080; }
+            .connector { fill: none; stroke: #1e3050; stroke-width: 1.5; }
+            .winner-slot { fill: #0a1428; stroke: #ffd700; stroke-width: 1; }
+            .winner-lbl { font: 700 11px/1 'Segoe UI', Arial, sans-serif; fill: #ffd700; letter-spacing: 1px; }
+          </style>
+        </defs>
+
+        <!-- ─── SEMI-FINAL 1 (top-left) ─── -->
+        <!-- box -->
+        <rect class="mb-bg" x="40" y="30" width="210" height="70" rx="4"/>
+        <!-- label bar -->
+        <rect class="mb-top" x="40" y="30" width="210" height="18" rx="4"/>
+        <text class="lbl" x="48" y="42">Semi-final 1</text>
+        <text class="date" x="48" y="41" dy="14" style="font-size:9px;fill:#4a6080;">26 Aug 2026</text>
+        <!-- team slots -->
+        <text class="team" x="56" y="68">1st Group A</text>
+        <line x1="40" y1="78" x2="250" y2="78" stroke="#1e3050" stroke-width="0.8"/>
+        <text class="team" x="56" y="92">2nd Group B</text>
+
+        <!-- ─── SEMI-FINAL 2 (bottom-left) ─── -->
+        <rect class="mb-bg" x="40" y="160" width="210" height="70" rx="4"/>
+        <rect class="mb-top" x="40" y="160" width="210" height="18" rx="4"/>
+        <text class="lbl" x="48" y="172">Semi-final 2</text>
+        <text class="date" x="48" y="171" dy="14" style="font-size:9px;fill:#4a6080;">26 Aug 2026</text>
+        <text class="team" x="56" y="198">1st Group B</text>
+        <line x1="40" y1="208" x2="250" y2="208" stroke="#1e3050" stroke-width="0.8"/>
+        <text class="team" x="56" y="222">2nd Group A</text>
+
+        <!-- ─── CONNECTORS ─── -->
+        <!-- SF1 right → midpoint -->
+        <path class="connector" d="M 250 80 H 290 V 128"/>
+        <!-- SF2 right → midpoint -->
+        <path class="connector" d="M 250 208 H 290 V 160"/>
+        <!-- midpoint down to final -->
+        <path class="connector" d="M 290 128 V 160"/>
+        <!-- midpoint → Final box -->
+        <path class="connector" d="M 290 144 H 560"/>
+
+        <!-- ─── GRAND FINAL ─── -->
+        <rect class="mb-bg" x="560" y="110" width="230" height="70" rx="4"/>
+        <!-- gold top bar for final -->
+        <rect x="560" y="110" width="230" height="18" rx="4" fill="rgba(255,215,0,0.12)" stroke="none"/>
+        <text class="lbl" x="568" y="122" style="fill:#ffd700;">Grand Final</text>
+        <text class="date" x="568" y="121" dy="14" style="font-size:9px;fill:#8a7020;">28 Aug 2026</text>
+        <text class="team" x="576" y="148">Winner SF 1</text>
+        <line x1="560" y1="158" x2="790" y2="158" stroke="#2a3a50" stroke-width="0.8"/>
+        <text class="team" x="576" y="172">Winner SF 2</text>
+
+        <!-- ─── CHAMPION TILE ─── -->
+        <rect class="winner-slot" x="680" y="210" width="130" height="32" rx="4"/>
+        <text class="winner-lbl" x="745" y="231" text-anchor="middle">🏆 Champion</text>
+        <!-- line from final to champion -->
+        <line x1="745" y1="180" x2="745" y2="210" stroke="#ffd700" stroke-width="1" stroke-dasharray="3 3"/>
+
+      </svg>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    AI Arena World Cup 2026 &nbsp;·&nbsp;
+    Played on <strong>UltraloveAIE_v2</strong> &nbsp;·&nbsp;
+    <a href="https://aiarena.net" target="_blank">aiarena.net</a>
+    &nbsp;·&nbsp;
+    <a href="https://discord.com/channels/350289306763657218/1526499148705042484" target="_blank">Discord Registration</a>
+  </p>
+</footer>
+
+</body>
+</html>
