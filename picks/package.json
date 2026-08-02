@@ -1,0 +1,14 @@
+{
+  "name": "picks",
+  "version": "1.0.0",
+  "description": "Post Discord webhook embeds with file attachments",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.0",
+    "form-data": "^4.0.0"
+  }
+}
