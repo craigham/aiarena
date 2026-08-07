@@ -305,7 +305,7 @@
     /* ── GROUP STAGE ──────────────────────────────────── */
     .groups-wrap {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 24px;
     }
 
@@ -343,6 +343,12 @@
       background: linear-gradient(90deg, #3a2a50 0%, #1a1228 100%);
       border-bottom: 2px solid #a060ff;
       color: #c090ff;
+    }
+
+    .group-header.d {
+      background: linear-gradient(90deg, #4a2a1a 0%, #281408 100%);
+      border-bottom: 2px solid #ff8c00;
+      color: #ffb040;
     }
 
     .group-table {
@@ -517,11 +523,11 @@
   <!-- ══ OVERVIEW TILES ═════════════════════════════════ -->
   <div class="overview-grid">
     <div class="stat-tile">
-      <div class="value">12</div>
+      <div class="value">16</div>
       <div class="label">Nations</div>
     </div>
     <div class="stat-tile">
-      <div class="value">3</div>
+      <div class="value">4</div>
       <div class="label">Groups</div>
     </div>
     <div class="stat-tile">
@@ -554,7 +560,7 @@
         <div>
           <div class="rule-title">Group Stage</div>
           <div class="rule-body">
-            All twelve nations are drawn into three groups of four.
+            All sixteen nations are drawn into four groups of four.
             Every nation plays each of the other three nations in the group once —
             three fixtures in total. Scoring: <strong>3 points</strong> for a victory,
             <strong>1 point</strong> for a draw, <strong>0 points</strong> for a defeat.
@@ -571,9 +577,9 @@
         <div>
           <div class="rule-title">Knockout Stage</div>
           <div class="rule-body">
-            The knockout stage opens with the Quarter-finals, where the three second-placed
-            nations compete alongside one group winner for Semi-final berths. The two group
-            winners with the highest Elo receive a bye directly to the Semi-finals.
+            The knockout stage opens with four Quarter-finals, where each group's
+            1st-placed nation faces a 2nd-placed nation from a different group.
+            The four Quarter-final winners advance to the Semi-finals.
             The two Semi-final winners meet in the Grand Final to determine
             the inaugural AI Arena World Champion.
             <br><br>
@@ -737,6 +743,30 @@
         </div>
       </div>
 
+      <!-- Slot 13 — TBD -->
+      <div class="team-slot empty">
+        <span class="slot-number">#13</span>
+        <div class="empty-label">Open Slot</div>
+      </div>
+
+      <!-- Slot 14 — TBD -->
+      <div class="team-slot empty">
+        <span class="slot-number">#14</span>
+        <div class="empty-label">Open Slot</div>
+      </div>
+
+      <!-- Slot 15 — TBD -->
+      <div class="team-slot empty">
+        <span class="slot-number">#15</span>
+        <div class="empty-label">Open Slot</div>
+      </div>
+
+      <!-- Slot 16 — TBD -->
+      <div class="team-slot empty">
+        <span class="slot-number">#16</span>
+        <div class="empty-label">Open Slot</div>
+      </div>
+
     </div>
 
     <a href="https://discord.com/channels/350289306763657218/1526499148705042484"
@@ -868,6 +898,45 @@
         </table>
       </div>
 
+      <!-- GROUP D -->
+      <div class="group-panel">
+        <div class="group-header d">&#9733; Group D</div>
+        <table class="group-table">
+          <thead>
+            <tr>
+              <th>Nation</th>
+              <th title="Wins">W</th>
+              <th title="Losses">L</th>
+              <th title="Draws">D</th>
+              <th title="Points">Pts</th>
+              <th colspan="3" style="letter-spacing:1px;">Fixtures</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="qualifier">
+              <td><div class="team-cell"><span class="team-name-sm" style="color:var(--text-dim);">TBD</span></div></td>
+              <td>—</td><td>—</td><td>—</td><td class="pts" style="color:var(--text-dim);">—</td>
+              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+            </tr>
+            <tr class="qualifier">
+              <td><div class="team-cell"><span class="team-name-sm" style="color:var(--text-dim);">TBD</span></div></td>
+              <td>—</td><td>—</td><td>—</td><td class="pts" style="color:var(--text-dim);">—</td>
+              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+            </tr>
+            <tr>
+              <td><div class="team-cell"><span class="team-name-sm" style="color:var(--text-dim);">TBD</span></div></td>
+              <td>—</td><td>—</td><td>—</td><td class="pts" style="color:var(--text-dim);">—</td>
+              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+            </tr>
+            <tr>
+              <td><div class="team-cell"><span class="team-name-sm" style="color:var(--text-dim);">TBD</span></div></td>
+              <td>—</td><td>—</td><td>—</td><td class="pts" style="color:var(--text-dim);">—</td>
+              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
     <div style="margin-top:12px; display:flex; align-items:center; gap:20px; font-size:11px; color:var(--text-dim);">
       <span><span class="match-circle" style="display:inline-block;vertical-align:middle;"></span> &nbsp;Not played</span>
@@ -902,8 +971,7 @@
       <div class="schedule-day">
         <div class="schedule-date">26 August 2026</div>
         <div class="schedule-round">Knockout Stage — Quarter-finals</div>
-        <div class="schedule-desc">The three group runners-up and one group winner battle for the final two Semi-final berths. Two group winners receive a bye.</div>
-      </div>
+        <div class="schedule-desc">All four Quarter-finals are played. Each match is 1st place from one group vs 2nd place from another group. Four winners advance to the Semi-finals.</div>      </div>
       <div class="schedule-day">
         <div class="schedule-date">28 August 2026</div>
         <div class="schedule-round">Knockout Stage — Semi-finals</div>
@@ -921,7 +989,7 @@
   <section id="bracket">
     <div class="section-title">Knockout Stage</div>
     <div class="bracket-wrap">
-      <svg class="bracket" width="870" height="370" viewBox="0 0 870 370" xmlns="http://www.w3.org/2000/svg">
+      <svg class="bracket" width="900" height="420" viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <style>
             .mb-bg   { fill: #141c2e; stroke: #1e3050; stroke-width: 1; }
@@ -929,85 +997,93 @@
             .lbl     { font: 600 9px/1 'Segoe UI', Arial, sans-serif; fill: #00d4ff; letter-spacing: 2px; }
             .team    { font: 500 11px/1 'Segoe UI', Arial, sans-serif; fill: #cdd6e8; }
             .connector { fill: none; stroke: #1e3050; stroke-width: 1.5; }
-            .bye-bg  { fill: #0d1a30; stroke: #1e4060; stroke-width: 1; stroke-dasharray: 4 2; }
-            .bye-lbl { font: 500 10px/1 'Segoe UI', Arial, sans-serif; fill: #4a8090; letter-spacing: 1px; }
             .winner-slot { fill: #0a1428; stroke: #ffd700; stroke-width: 1; }
             .winner-lbl { font: 700 11px/1 'Segoe UI', Arial, sans-serif; fill: #ffd700; letter-spacing: 1px; }
           </style>
         </defs>
 
-        <!-- ─── QF1: 2nd Group B vs 2nd Group C ─── y=20, center=49 -->
+        <!-- ─── QF1: 1st Group A vs 2nd Group D ─── y=20 -->
         <rect class="mb-bg" x="20" y="20" width="185" height="58" rx="4"/>
         <rect class="mb-top" x="20" y="20" width="185" height="16" rx="4"/>
         <text class="lbl" x="28" y="31">QUARTER-FINAL 1 (Bo1)</text>
         <text style="font:400 9px 'Segoe UI',Arial,sans-serif;fill:#4a6080;" x="28" y="44">26 Aug 2026</text>
-        <text class="team" x="34" y="58">2nd Group B</text>
+        <text class="team" x="34" y="58">1st Group A</text>
         <line x1="20" y1="65" x2="205" y2="65" stroke="#1e3050" stroke-width="0.8"/>
-        <text class="team" x="34" y="72">2nd Group C</text>
+        <text class="team" x="34" y="72">2nd Group D</text>
 
-        <!-- ─── BYE: 1st Group A ─── y=105, center=121 -->
-        <rect class="bye-bg" x="20" y="105" width="185" height="32" rx="4"/>
-        <text class="bye-lbl" x="112" y="125" text-anchor="middle">1st Group A — Bye</text>
+        <!-- ─── QF2: 1st Group C vs 2nd Group B ─── y=110 -->
+        <rect class="mb-bg" x="20" y="110" width="185" height="58" rx="4"/>
+        <rect class="mb-top" x="20" y="110" width="185" height="16" rx="4"/>
+        <text class="lbl" x="28" y="121">QUARTER-FINAL 2 (Bo1)</text>
+        <text style="font:400 9px 'Segoe UI',Arial,sans-serif;fill:#4a6080;" x="28" y="134">26 Aug 2026</text>
+        <text class="team" x="34" y="148">1st Group C</text>
+        <line x1="20" y1="155" x2="205" y2="155" stroke="#1e3050" stroke-width="0.8"/>
+        <text class="team" x="34" y="162">2nd Group B</text>
 
-        <!-- QF1 side connectors → SF1 midpoint x=250, y=85 -->
-        <path class="connector" d="M 205 49 H 250 V 121"/>
-        <path class="connector" d="M 205 121 H 250"/>
-        <path class="connector" d="M 250 85 H 305"/>
+        <!-- ─── QF3: 1st Group B vs 2nd Group C ─── y=240 -->
+        <rect class="mb-bg" x="20" y="240" width="185" height="58" rx="4"/>
+        <rect class="mb-top" x="20" y="240" width="185" height="16" rx="4"/>
+        <text class="lbl" x="28" y="251">QUARTER-FINAL 3 (Bo1)</text>
+        <text style="font:400 9px 'Segoe UI',Arial,sans-serif;fill:#4a6080;" x="28" y="264">26 Aug 2026</text>
+        <text class="team" x="34" y="278">1st Group B</text>
+        <line x1="20" y1="285" x2="205" y2="285" stroke="#1e3050" stroke-width="0.8"/>
+        <text class="team" x="34" y="292">2nd Group C</text>
 
-        <!-- ─── BYE: 1st Group B ─── y=210, center=226 -->
-        <rect class="bye-bg" x="20" y="210" width="185" height="32" rx="4"/>
-        <text class="bye-lbl" x="112" y="230" text-anchor="middle">1st Group B — Bye</text>
+        <!-- ─── QF4: 1st Group D vs 2nd Group A ─── y=330 -->
+        <rect class="mb-bg" x="20" y="330" width="185" height="58" rx="4"/>
+        <rect class="mb-top" x="20" y="330" width="185" height="16" rx="4"/>
+        <text class="lbl" x="28" y="341">QUARTER-FINAL 4 (Bo1)</text>
+        <text style="font:400 9px 'Segoe UI',Arial,sans-serif;fill:#4a6080;" x="28" y="354">26 Aug 2026</text>
+        <text class="team" x="34" y="368">1st Group D</text>
+        <line x1="20" y1="375" x2="205" y2="375" stroke="#1e3050" stroke-width="0.8"/>
+        <text class="team" x="34" y="382">2nd Group A</text>
 
-        <!-- ─── QF2: 1st Group C vs 2nd Group A ─── y=278, center=307 -->
-        <rect class="mb-bg" x="20" y="278" width="185" height="58" rx="4"/>
-        <rect class="mb-top" x="20" y="278" width="185" height="16" rx="4"/>
-        <text class="lbl" x="28" y="289">QUARTER-FINAL 2 (Bo1)</text>
-        <text style="font:400 9px 'Segoe UI',Arial,sans-serif;fill:#4a6080;" x="28" y="302">26 Aug 2026</text>
-        <text class="team" x="34" y="316">1st Group C</text>
-        <line x1="20" y1="323" x2="205" y2="323" stroke="#1e3050" stroke-width="0.8"/>
-        <text class="team" x="34" y="330">2nd Group A</text>
+        <!-- QF1 + QF2 connectors → SF1 midpoint -->
+        <path class="connector" d="M 205 49 H 250 V 139"/>
+        <path class="connector" d="M 205 139 H 250"/>
+        <path class="connector" d="M 250 94 H 305"/>
 
-        <!-- QF2 side connectors → SF2 midpoint x=250, y=267 -->
-        <path class="connector" d="M 205 226 H 250 V 307"/>
-        <path class="connector" d="M 205 307 H 250"/>
-        <path class="connector" d="M 250 267 H 305"/>
+        <!-- QF3 + QF4 connectors → SF2 midpoint -->
+        <path class="connector" d="M 205 269 H 250 V 359"/>
+        <path class="connector" d="M 205 359 H 250"/>
+        <path class="connector" d="M 250 314 H 305"/>
 
-        <!-- ─── SF1: 1st Group A vs Winner QF1 ─── y=56, center=85 -->
-        <rect class="mb-bg" x="305" y="56" width="185" height="58" rx="4"/>
-        <rect class="mb-top" x="305" y="56" width="185" height="16" rx="4"/>
-        <text class="lbl" x="313" y="67">SEMI-FINAL 1 (Bo3)</text>
-        <text style="font:400 9px 'Segoe UI',Arial,sans-serif;fill:#4a6080;" x="313" y="80">28 Aug 2026</text>
-        <text class="team" x="319" y="94">1st Group A</text>
-        <line x1="305" y1="101" x2="490" y2="101" stroke="#1e3050" stroke-width="0.8"/>
-        <text class="team" x="319" y="108">Winner QF1</text>
+        <!-- ─── SF1: Winner QF1 vs Winner QF2 ─── y=65 -->
+        <rect class="mb-bg" x="305" y="65" width="185" height="58" rx="4"/>
+        <rect class="mb-top" x="305" y="65" width="185" height="16" rx="4"/>
+        <text class="lbl" x="313" y="76">SEMI-FINAL 1 (Bo3)</text>
+        <text style="font:400 9px 'Segoe UI',Arial,sans-serif;fill:#4a6080;" x="313" y="89">28 Aug 2026</text>
+        <text class="team" x="319" y="103">Winner QF1</text>
+        <line x1="305" y1="110" x2="490" y2="110" stroke="#1e3050" stroke-width="0.8"/>
+        <text class="team" x="319" y="117">Winner QF2</text>
 
-        <!-- ─── SF2: 1st Group B vs Winner QF2 ─── y=238, center=267 -->
-        <rect class="mb-bg" x="305" y="238" width="185" height="58" rx="4"/>
-        <rect class="mb-top" x="305" y="238" width="185" height="16" rx="4"/>
-        <text class="lbl" x="313" y="249">SEMI-FINAL 2 (Bo3)</text>
-        <text style="font:400 9px 'Segoe UI',Arial,sans-serif;fill:#4a6080;" x="313" y="262">28 Aug 2026</text>
-        <text class="team" x="319" y="276">1st Group B</text>
-        <line x1="305" y1="283" x2="490" y2="283" stroke="#1e3050" stroke-width="0.8"/>
-        <text class="team" x="319" y="290">Winner QF2</text>
+        <!-- ─── SF2: Winner QF3 vs Winner QF4 ─── y=285 -->
+        <rect class="mb-bg" x="305" y="285" width="185" height="58" rx="4"/>
+        <rect class="mb-top" x="305" y="285" width="185" height="16" rx="4"/>
+        <text class="lbl" x="313" y="296">SEMI-FINAL 2 (Bo3)</text>
+        <text style="font:400 9px 'Segoe UI',Arial,sans-serif;fill:#4a6080;" x="313" y="309">28 Aug 2026</text>
+        <text class="team" x="319" y="323">Winner QF3</text>
+        <line x1="305" y1="330" x2="490" y2="330" stroke="#1e3050" stroke-width="0.8"/>
+        <text class="team" x="319" y="337">Winner QF4</text>
 
-        <!-- SF connectors → Final midpoint x=535, y=176 -->
-        <path class="connector" d="M 490 85 H 535 V 267"/>
-        <path class="connector" d="M 490 267 H 535"/>
-        <path class="connector" d="M 535 176 H 575"/>
+        <!-- SF connectors → Final midpoint -->
+        <path class="connector" d="M 490 94 H 535 V 314"/>
+        <path class="connector" d="M 490 314 H 535"/>
+        <path class="connector" d="M 535 204 H 575"/>
 
-        <!-- ─── GRAND FINAL ─── y=147, center=176 -->
-        <rect class="mb-bg" x="575" y="147" width="210" height="58" rx="4"/>
-        <rect x="575" y="147" width="210" height="16" rx="4" fill="rgba(255,215,0,0.12)" stroke="none"/>
-        <text class="lbl" x="583" y="158" style="fill:#ffd700;">GRAND FINAL (Bo5)</text>
-        <text style="font:400 9px 'Segoe UI',Arial,sans-serif;fill:#8a7020;" x="583" y="171">30 Aug 2026</text>
-        <text class="team" x="589" y="185">Winner SF 1</text>
-        <line x1="575" y1="192" x2="785" y2="192" stroke="#2a3a50" stroke-width="0.8"/>
-        <text class="team" x="589" y="199">Winner SF 2</text>
+        <!-- ─── GRAND FINAL ─── y=175 -->
+        <rect class="mb-bg" x="575" y="175" width="210" height="58" rx="4"/>
+        <rect x="575" y="175" width="210" height="16" rx="4" fill="rgba(255,215,0,0.12)" stroke="none"/>
+        <text class="lbl" x="583" y="186" style="fill:#ffd700;">GRAND FINAL (Bo5)</text>
+        <text style="font:400 9px 'Segoe UI',Arial,sans-serif;fill:#8a7020;" x="583" y="199">30 Aug 2026</text>
+        <text class="team" x="589" y="213">Winner SF 1</text>
+        <line x1="575" y1="220" x2="785" y2="220" stroke="#2a3a50" stroke-width="0.8"/>
+        <text class="team" x="589" y="227">Winner SF 2</text>
 
         <!-- ─── CHAMPION ─── -->
-        <line x1="680" y1="205" x2="680" y2="222" stroke="#ffd700" stroke-width="1" stroke-dasharray="3 3"/>
-        <rect class="winner-slot" x="630" y="222" width="100" height="26" rx="4"/>
-        <text class="winner-lbl" x="680" y="239" text-anchor="middle">🏆 Champion</text>
+        <line x1="680" y1="233" x2="680" y2="250" stroke="#ffd700" stroke-width="1" stroke-dasharray="3 3"/>
+        <rect class="winner-slot" x="630" y="250" width="100" height="26" rx="4"/>
+        <text class="winner-lbl" x="680" y="267" text-anchor="middle">🏆 Champion</text>
 
       </svg>
     </div>
