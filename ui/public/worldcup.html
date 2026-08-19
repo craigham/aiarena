@@ -495,6 +495,92 @@
     .match-box text.date { fill: #4a6080; font-size: 10px; }
     .match-box text.label { fill: #00d4ff; font-size: 10px; letter-spacing: 2; }
 
+    /* ── FIXTURES ─────────────────────────────────────────── */
+    .fixtures-wrap {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .matchday-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .matchday-header {
+      padding: 12px 16px 10px;
+      background: linear-gradient(90deg, #0f1a30 0%, #0a0e1a 100%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .matchday-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+    }
+
+    .matchday-date {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-top: 3px;
+    }
+
+    .fixture-group-block {
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(30, 48, 80, 0.4);
+    }
+
+    .fixture-group-block:last-child { border-bottom: none; }
+
+    .fixture-group-label {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 6px 14px 2px;
+    }
+
+    .fixture-row {
+      display: flex;
+      align-items: center;
+      padding: 5px 14px;
+      gap: 6px;
+    }
+
+    .fixture-team {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .fixture-team.away { flex-direction: row-reverse; }
+
+    .fixture-team-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .fixture-vs {
+      font-size: 9px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+      flex-shrink: 0;
+      width: 16px;
+      text-align: center;
+    }
+
     footer {
       text-align: center;
       padding: 32px 20px;
@@ -1076,6 +1162,203 @@
         <div class="schedule-round">Grand Final</div>
         <div class="schedule-desc">The two finalists contest the Grand Final. One nation is crowned AI Arena World Champion.</div>
       </div>
+    </div>
+  </section>
+
+  <!-- ══ GROUP STAGE FIXTURES ══════════════════════════════ -->
+  <section id="fixtures">
+    <div class="section-title">Group Stage Fixtures</div>
+    <div class="fixtures-wrap">
+
+      <!-- MATCHDAY 1 -->
+      <div class="matchday-card">
+        <div class="matchday-header">
+          <div class="matchday-label">Matchday 1</div>
+          <div class="matchday-date">20 August 2026</div>
+        </div>
+        <div class="fixture-group-block">
+          <div class="fixture-group-label">Group A</div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/gb.png" alt=""/><span class="fixture-team-name">Great Britain</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/es.png" alt=""/><span class="fixture-team-name">Spain</span></div>
+          </div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/fi.png" alt=""/><span class="fixture-team-name">Finland</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/pl.png" alt=""/><span class="fixture-team-name">Poland</span></div>
+          </div>
+        </div>
+        <div class="fixture-group-block">
+          <div class="fixture-group-label">Group B</div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/ca.png" alt=""/><span class="fixture-team-name">Canada</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/tw.png" alt=""/><span class="fixture-team-name">Taiwan</span></div>
+          </div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/nl.png" alt=""/><span class="fixture-team-name">Netherlands</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/us.png" alt=""/><span class="fixture-team-name">USA</span></div>
+          </div>
+        </div>
+        <div class="fixture-group-block">
+          <div class="fixture-group-label">Group C</div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/se.png" alt=""/><span class="fixture-team-name">Sweden</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/cz.png" alt=""/><span class="fixture-team-name">Czechia</span></div>
+          </div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/br.png" alt=""/><span class="fixture-team-name">Brazil</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/bg.png" alt=""/><span class="fixture-team-name">Bulgaria</span></div>
+          </div>
+        </div>
+        <div class="fixture-group-block">
+          <div class="fixture-group-label">Group D</div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/ru.png" alt=""/><span class="fixture-team-name">Russia</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/ee.png" alt=""/><span class="fixture-team-name">Estonia</span></div>
+          </div>
+        </div>
+        <div class="fixture-group-block">
+          <div class="fixture-group-label">Group E</div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/fr.png" alt=""/><span class="fixture-team-name">France</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/mx.png" alt=""/><span class="fixture-team-name">Mexico</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MATCHDAY 2 -->
+      <div class="matchday-card">
+        <div class="matchday-header">
+          <div class="matchday-label">Matchday 2</div>
+          <div class="matchday-date">22 August 2026</div>
+        </div>
+        <div class="fixture-group-block">
+          <div class="fixture-group-label">Group A</div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/gb.png" alt=""/><span class="fixture-team-name">Great Britain</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/pl.png" alt=""/><span class="fixture-team-name">Poland</span></div>
+          </div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/fi.png" alt=""/><span class="fixture-team-name">Finland</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/es.png" alt=""/><span class="fixture-team-name">Spain</span></div>
+          </div>
+        </div>
+        <div class="fixture-group-block">
+          <div class="fixture-group-label">Group B</div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/ca.png" alt=""/><span class="fixture-team-name">Canada</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/us.png" alt=""/><span class="fixture-team-name">USA</span></div>
+          </div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/nl.png" alt=""/><span class="fixture-team-name">Netherlands</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/tw.png" alt=""/><span class="fixture-team-name">Taiwan</span></div>
+          </div>
+        </div>
+        <div class="fixture-group-block">
+          <div class="fixture-group-label">Group C</div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/se.png" alt=""/><span class="fixture-team-name">Sweden</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/bg.png" alt=""/><span class="fixture-team-name">Bulgaria</span></div>
+          </div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/br.png" alt=""/><span class="fixture-team-name">Brazil</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/cz.png" alt=""/><span class="fixture-team-name">Czechia</span></div>
+          </div>
+        </div>
+        <div class="fixture-group-block">
+          <div class="fixture-group-label">Group D</div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/de.png" alt=""/><span class="fixture-team-name">Germany</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/ee.png" alt=""/><span class="fixture-team-name">Estonia</span></div>
+          </div>
+        </div>
+        <div class="fixture-group-block">
+          <div class="fixture-group-label">Group E</div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/au.png" alt=""/><span class="fixture-team-name">Australia</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/mx.png" alt=""/><span class="fixture-team-name">Mexico</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MATCHDAY 3 -->
+      <div class="matchday-card">
+        <div class="matchday-header">
+          <div class="matchday-label">Matchday 3</div>
+          <div class="matchday-date">24 August 2026</div>
+        </div>
+        <div class="fixture-group-block">
+          <div class="fixture-group-label">Group A</div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/gb.png" alt=""/><span class="fixture-team-name">Great Britain</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/fi.png" alt=""/><span class="fixture-team-name">Finland</span></div>
+          </div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/pl.png" alt=""/><span class="fixture-team-name">Poland</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/es.png" alt=""/><span class="fixture-team-name">Spain</span></div>
+          </div>
+        </div>
+        <div class="fixture-group-block">
+          <div class="fixture-group-label">Group B</div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/ca.png" alt=""/><span class="fixture-team-name">Canada</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/nl.png" alt=""/><span class="fixture-team-name">Netherlands</span></div>
+          </div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/us.png" alt=""/><span class="fixture-team-name">USA</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/tw.png" alt=""/><span class="fixture-team-name">Taiwan</span></div>
+          </div>
+        </div>
+        <div class="fixture-group-block">
+          <div class="fixture-group-label">Group C</div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/se.png" alt=""/><span class="fixture-team-name">Sweden</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/br.png" alt=""/><span class="fixture-team-name">Brazil</span></div>
+          </div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/bg.png" alt=""/><span class="fixture-team-name">Bulgaria</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/cz.png" alt=""/><span class="fixture-team-name">Czechia</span></div>
+          </div>
+        </div>
+        <div class="fixture-group-block">
+          <div class="fixture-group-label">Group D</div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/de.png" alt=""/><span class="fixture-team-name">Germany</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/ru.png" alt=""/><span class="fixture-team-name">Russia</span></div>
+          </div>
+        </div>
+        <div class="fixture-group-block">
+          <div class="fixture-group-label">Group E</div>
+          <div class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/au.png" alt=""/><span class="fixture-team-name">Australia</span></div>
+            <span class="fixture-vs">vs</span>
+            <div class="fixture-team away"><img src="https://flagcdn.com/20x15/fr.png" alt=""/><span class="fixture-team-name">France</span></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
