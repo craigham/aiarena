@@ -114,7 +114,7 @@
     main {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 40px 20px 80px;
+      padding: 40px 20px 0;
     }
 
     section { margin-bottom: 60px; }
@@ -191,7 +191,7 @@
     }
 
     .rule-title {
-      font-size: 12px;
+      font-size: 13px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--accent-cyan);
@@ -247,7 +247,7 @@
       position: absolute;
       top: 8px;
       left: 10px;
-      font-size: 10px;
+      font-size: 11px;
       color: var(--text-dim);
       letter-spacing: 1px;
     }
@@ -258,7 +258,7 @@
     }
 
     .team-name {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       letter-spacing: 1px;
       text-transform: uppercase;
@@ -324,7 +324,7 @@
 
     .group-header {
       padding: 14px 20px;
-      font-size: 12px;
+      font-size: 13px;
       letter-spacing: 3px;
       text-transform: uppercase;
       font-weight: 700;
@@ -370,7 +370,7 @@
 
     .group-table th {
       padding: 8px 4px;
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--text-dim);
@@ -444,7 +444,7 @@
     }
 
     .schedule-date {
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--accent-cyan);
@@ -459,7 +459,7 @@
     }
 
     .schedule-desc {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-secondary);
       line-height: 1.5;
     }
@@ -517,7 +517,7 @@
     }
 
     .matchday-label {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -525,7 +525,7 @@
     }
 
     .matchday-date {
-      font-size: 10px;
+      font-size: 11px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--text-dim);
@@ -540,7 +540,7 @@
     .fixture-group-block:last-child { border-bottom: none; }
 
     .fixture-group-label {
-      font-size: 9px;
+      font-size: 11px;
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--text-dim);
@@ -571,7 +571,7 @@
     .fixture-team.away { flex-direction: row-reverse; }
 
     .fixture-team-name {
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--text-primary);
       white-space: nowrap;
@@ -580,7 +580,7 @@
     }
 
     .fixture-vs {
-      font-size: 9px;
+      font-size: 11px;
       color: var(--text-dim);
       letter-spacing: 1px;
       flex-shrink: 0;
@@ -598,6 +598,67 @@
     }
 
     footer a { color: var(--accent-blue); text-decoration: none; }
+
+    /* ── MOBILE: HEADER ────────────────────────────────── */
+    @media (max-width: 540px) {
+      .header-inner { gap: 20px; padding: 24px 20px 20px; }
+      h1            { font-size: 28px; }
+      .subtitle     { font-size: 13px; }
+    }
+
+    @media (max-width: 400px) {
+      .header-inner { gap: 12px; padding: 20px 12px 16px; }
+      h1            { font-size: 20px; }
+      .subtitle     { font-size: 11px; }
+      .stars        { margin-top: 10px; }
+      .star         { width: 14px; height: 14px; }
+    }
+
+    /* ── MOBILE: OVERVIEW TILES ────────────────────────── */
+    @media (max-width: 540px) {
+      .stat-tile        { padding: 12px 8px; }
+      .stat-tile .value { font-size: 20px; }
+      .stat-tile .label { font-size: 11px; letter-spacing: 1px; }
+    }
+
+    /* ── MOBILE: REGISTERED NATIONS ───────────────────── */
+    @media (max-width: 640px) {
+      .teams-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ── MOBILE: GROUP STAGE ───────────────────────────── */
+    @media (max-width: 640px) {
+      .groups-wrap { grid-template-columns: 1fr; }
+      .groups-wrap .group-panel:last-child:nth-child(odd) { grid-column: auto; max-width: none; }
+      .group-legend                { gap: 8px; font-size: 11px; flex-wrap: wrap; }
+      .group-legend .match-circle  { width: 14px; height: 14px; }
+    }
+    @media (max-width: 640px) {
+      .rules-grid { grid-template-columns: 1fr; }
+      .collapsible .section-title           { cursor: pointer; user-select: none; }
+      .collapsible .section-title .chevron  { margin-right: 6px; font-size: 9px; display: inline-block; }
+      .collapsible.collapsed .collapsible-content { display: none; }
+      .collapsible.collapsed { margin-bottom: 16px; }
+    }
+
+    /* ── MOBILE: MATCH SCHEDULE ────────────────────────── */
+    @media (max-width: 640px) {
+      .schedule-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── MOBILE: GROUP STAGE FIXTURES ─────────────────── */
+    @media (max-width: 640px) {
+      .fixtures-wrap { grid-template-columns: 1fr; }
+    }
+
+    /* ── MOBILE: KNOCKOUT STAGE ────────────────────────── */
+    @media (max-width: 640px) {
+      .bracket-wrap                              { overflow-x: scroll; padding: 16px; }
+      .bracket-wrap::-webkit-scrollbar          { height: 6px; }
+      .bracket-wrap::-webkit-scrollbar-track    { background: var(--bg-panel); }
+      .bracket-wrap::-webkit-scrollbar-thumb    { background: var(--border); border-radius: 3px; }
+      svg.bracket                               { width: 840px; height: auto; max-width: none; }
+    }
 
     /* ── MATCHDAY OVERLAY ───────────────────────────────── */
     #overlay {
@@ -642,7 +703,7 @@
     }
 
     .overlay-group-label {
-      padding: 4px 2px; font-size: 10px; letter-spacing: 3px;
+      padding: 4px 2px; font-size: 11px; letter-spacing: 3px;
       text-transform: uppercase; font-weight: 700;
       color: var(--accent-cyan);
     }
@@ -672,19 +733,19 @@
     .overlay-nation img { border-radius: 2px; display: block; }
 
     .overlay-nation-name {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
       text-transform: uppercase; color: var(--text-primary); text-align: center;
     }
 
     .overlay-vs {
-      font-size: 10px; font-weight: 700; color: var(--text-dim);
+      font-size: 11px; font-weight: 700; color: var(--text-dim);
       letter-spacing: 2px; flex-shrink: 0;
     }
 
     .overlay-replay {
       margin: 0 10px 8px; padding: 5px 10px;
       border-radius: 5px; border: none; cursor: pointer;
-      font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
       width: calc(100% - 20px); transition: opacity 0.2s;
     }
 
@@ -711,6 +772,12 @@
     }
 
     #overlay-open-btn:hover { background: var(--accent-blue); color: #fff; }
+
+    /* ── MOBILE: OVERLAY ───────────────────────────────── */
+    @media (max-width: 640px) {
+      .overlay-nation-name { font-size: 10px; }
+      .overlay-replay      { font-size: 10px; }
+    }
   </style>
 </head>
 <body>
@@ -816,7 +883,7 @@
     </div>
     <div class="header-text">
       <h1>AI Arena<br>World Cup</h1>
-      <div class="subtitle">2026 &nbsp;·&nbsp; Played on UltraloveAIE_v2 &nbsp;·&nbsp; StarCraft II</div>
+      <div class="subtitle">2026 &nbsp;·&nbsp; Ultralove &nbsp;·&nbsp; StarCraft II</div>
       <div class="stars">
         <div class="star"></div>
         <div class="star"></div>
@@ -847,8 +914,9 @@
   </div>
 
   <!-- ══ TOURNAMENT REGULATIONS ═════════════════════════ -->
-  <section id="rules">
+  <section id="rules" class="collapsible collapsed">
     <div class="section-title">Tournament Regulations</div>
+    <div class="collapsible-content">
     <div class="rules-grid">
       <div class="rule-card">
         <div class="rule-icon">🌍</div>
@@ -913,11 +981,13 @@
         </div>
       </div>
     </div>
+    </div><!-- /.collapsible-content -->
   </section>
 
   <!-- ══ REGISTERED NATIONS ═════════════════════════════ -->
-  <section id="nations">
+  <section id="nations" class="collapsible collapsed">
     <div class="section-title">Registered Nations</div>
+    <div class="collapsible-content">
     <div class="teams-grid">
 
       <!-- Slot 1 -->
@@ -1127,11 +1197,13 @@
     </div>
 
     <span style="margin-left:16px; font-size:15px; color:var(--text-secondary); letter-spacing:1px;">Registration closed on 16 August 2026 at 10:00 UTC</span>
+    </div><!-- /.collapsible-content -->
   </section>
 
   <!-- ══ GROUP STAGE STANDINGS ══════════════════════════ -->
-  <section id="groups">
+  <section id="groups" class="collapsible">
     <div class="section-title">Group Stage</div>
+    <div class="collapsible-content">
     <div class="groups-wrap">
 
       <!-- GROUP A -->
@@ -1330,7 +1402,7 @@
       </div>
 
     </div>
-    <div style="margin-top:12px; display:flex; align-items:center; gap:20px; font-size:11px; color:var(--text-dim);">
+    <div class="group-legend" style="margin-top:12px; display:flex; align-items:center; gap:20px; font-size:11px; color:var(--text-dim);">
       <span><span class="match-circle" style="display:inline-block;vertical-align:middle;"></span> &nbsp;Not played</span>
       <span><span class="match-circle w" style="display:inline-block;vertical-align:middle;"></span> &nbsp;Win</span>
       <span><span class="match-circle d" style="display:inline-block;vertical-align:middle;"></span> &nbsp;Draw</span>
@@ -1339,11 +1411,13 @@
         <span style="border-left:3px solid var(--accent-gold); padding-left:6px;">Qualifies to knockout stage</span>
       </span>
     </div>
+    </div><!-- /.collapsible-content -->
   </section>
 
   <!-- ══ MATCH SCHEDULE ═════════════════════════════════ -->
-  <section id="schedule">
+  <section id="schedule" class="collapsible">
     <div class="section-title">Match Schedule</div>
+    <div class="collapsible-content">
     <div class="schedule-grid">
       <div class="schedule-day">
         <div class="schedule-date">20 August 2026</div>
@@ -1376,11 +1450,13 @@
         <div class="schedule-desc">The two finalists contest the Grand Final. One nation is crowned AI Arena World Champion.</div>
       </div>
     </div>
+    </div><!-- /.collapsible-content -->
   </section>
 
   <!-- ══ GROUP STAGE FIXTURES ══════════════════════════════ -->
-  <section id="fixtures">
+  <section id="fixtures" class="collapsible">
     <div class="section-title">Group Stage Fixtures</div>
+    <div class="collapsible-content">
     <div class="fixtures-wrap">
 
       <!-- MATCHDAY 1 -->
@@ -1573,11 +1649,13 @@
       </div>
 
     </div>
+    </div><!-- /.collapsible-content -->
   </section>
 
   <!-- ══ ELIMINATION BRACKET ════════════════════════════ -->
-  <section id="bracket">
+  <section id="bracket" class="collapsible">
     <div class="section-title">Knockout Stage</div>
+    <div class="collapsible-content">
     <div class="bracket-wrap">
       <svg class="bracket" width="910" height="460" viewBox="0 0 910 460" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -1700,19 +1778,47 @@
 
       </svg>
     </div>
+    </div><!-- /.collapsible-content -->
   </section>
 
 </main>
 
 <footer>
   <p>
-    AI Arena World Cup 2026 &nbsp;·&nbsp;
-    Played on <strong>UltraloveAIE_v2</strong> &nbsp;·&nbsp;
+    AI Arena World Cup 2026
+    &nbsp;·&nbsp;
+    Ultralove
+    &nbsp;·&nbsp;
     <a href="https://aiarena.net" target="_blank">aiarena.net</a>
     &nbsp;·&nbsp;
-    <a href="https://discord.com/channels/350289306763657218/1526499148705042484" target="_blank">Discord Registration</a>
+    <a href="https://discord.com/channels/350289306763657218/1526499148705042484" target="_blank">Discord</a>
   </p>
 </footer>
 
+<script>
+  (function () {
+    var mq = window.matchMedia('(max-width: 640px)');
+    function initCollapsibles() {
+      if (!mq.matches) return;
+      document.querySelectorAll('.collapsible').forEach(function (section) {
+        var title = section.querySelector('.section-title');
+        if (title.querySelector('.chevron')) return;
+        var chevron = document.createElement('span');
+        chevron.className = 'chevron';
+        chevron.textContent = section.classList.contains('collapsed') ? '▶ ' : '▼ ';
+        title.insertBefore(chevron, title.firstChild);
+        title.addEventListener('click', function () {
+          section.classList.toggle('collapsed');
+          chevron.textContent = section.classList.contains('collapsed') ? '▶ ' : '▼ ';
+        });
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCollapsibles);
+    } else {
+      initCollapsibles();
+    }
+  })();
+</script>
 </body>
 </html>
