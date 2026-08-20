@@ -42,6 +42,7 @@
       padding: 0;
       overflow: hidden;
       position: relative;
+      z-index: 10000;
     }
 
     .header-inner {
@@ -61,7 +62,7 @@
 
     .trophy-wrap img {
       width: 160px;
-      height: auto;
+      height: 160px;
       display: block;
       border-radius: 16px;
     }
@@ -551,7 +552,13 @@
       align-items: center;
       padding: 5px 14px;
       gap: 6px;
+      text-decoration: none;
+      color: inherit;
     }
+
+    a.fixture-row:hover { background: rgba(30, 144, 255, 0.08); cursor: pointer; }
+
+    .fixture-winner { font-size: 11px; color: var(--accent-gold); margin: 0 2px; }
 
     .fixture-team {
       display: flex;
@@ -591,9 +598,215 @@
     }
 
     footer a { color: var(--accent-blue); text-decoration: none; }
+
+    /* ── MATCHDAY OVERLAY ───────────────────────────────── */
+    #overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg-dark);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #overlay-inner {
+      width: 100%; max-width: 860px;
+      margin: 0 auto;
+      padding: 16px 24px 20px;
+      display: flex; flex-direction: column; align-items: center; gap: 14px;
+    }
+
+    #overlay-title {
+      font-size: 34px; font-weight: 300; font-style: italic;
+      text-transform: none; letter-spacing: 1px; text-align: center;
+      color: var(--accent-cyan);
+      -webkit-text-fill-color: var(--accent-cyan);
+      background: none;
+      text-shadow: 0 0 24px rgba(0, 212, 255, 0.35);
+      margin: 0;
+    }
+
+    #overlay-subtitle {
+      font-size: 16px; color: var(--text-secondary); letter-spacing: 1px; text-align: center;
+    }
+
+    #overlay-matches {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .overlay-group-block {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+
+    .overlay-group-label {
+      padding: 4px 2px; font-size: 10px; letter-spacing: 3px;
+      text-transform: uppercase; font-weight: 700;
+      color: var(--accent-cyan);
+    }
+
+    .overlay-group-matches {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    }
+
+    .overlay-group-matches.single { grid-template-columns: 1fr; }
+
+    .overlay-match-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+
+    .overlay-matchup {
+      display: flex; align-items: center; justify-content: space-around;
+      gap: 8px; padding: 12px 12px 8px; flex: 1;
+    }
+
+    .overlay-nation {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 5px; flex: 1;
+    }
+
+    .overlay-nation img { border-radius: 2px; display: block; }
+
+    .overlay-nation-name {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
+      text-transform: uppercase; color: var(--text-primary); text-align: center;
+    }
+
+    .overlay-vs {
+      font-size: 10px; font-weight: 700; color: var(--text-dim);
+      letter-spacing: 2px; flex-shrink: 0;
+    }
+
+    .overlay-replay {
+      margin: 0 10px 8px; padding: 5px 10px;
+      border-radius: 5px; border: none; cursor: pointer;
+      font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      width: calc(100% - 20px); transition: opacity 0.2s;
+    }
+
+    .overlay-replay.available {
+      background: linear-gradient(135deg, var(--accent-blue) 0%, #1565c0 100%);
+      color: #fff;
+    }
+
+    .overlay-replay.available:hover { opacity: 0.8; }
+
+    .overlay-replay.pending {
+      background: var(--bg-panel); color: var(--text-dim);
+      border: 1px dashed #2a3a50; cursor: default;
+    }
+
+    #overlay-footer { margin-top: 12px; }
+
+    #overlay-open-btn {
+      padding: 10px 28px; border: 1px solid var(--accent-blue);
+      background: transparent; color: var(--accent-blue);
+      border-radius: 6px; font-size: 13px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    #overlay-open-btn:hover { background: var(--accent-blue); color: #fff; }
   </style>
 </head>
 <body>
+
+<!-- ══ MATCHDAY OVERLAY ════════════════════════════════════ -->
+<div id="overlay">
+  <div id="overlay-inner">
+    <h2 id="overlay-title">It's Matchday 1</h2>
+    <div id="overlay-subtitle">Group Stage · Best of 1 · UltraloveAIE_v2</div>
+    <div id="overlay-matches"></div>
+    <div id="overlay-footer">
+      <button id="overlay-open-btn" onclick="document.getElementById('overlay').style.display='none'; document.body.style.overflow=''">
+        View full tournament page →
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const MATCHDAY1 = [
+    { group: 'A', home: { name: 'Great Britain', code: 'gb' }, away: { name: 'Spain',    code: 'es' }, matchId: 4930742 },
+    { group: 'A', home: { name: 'Finland',       code: 'fi' }, away: { name: 'Poland',   code: 'pl' }, matchId: 4930743 },
+    { group: 'B', home: { name: 'Canada',        code: 'ca' }, away: { name: 'Taiwan',   code: 'tw' }, matchId: 4930745 },
+    { group: 'B', home: { name: 'Netherlands',   code: 'nl' }, away: { name: 'USA',      code: 'us' }, matchId: 4930746 },
+    { group: 'C', home: { name: 'Sweden',        code: 'se' }, away: { name: 'Czechia',  code: 'cz' }, matchId: 4930747 },
+    { group: 'C', home: { name: 'Brazil',        code: 'br' }, away: { name: 'Bulgaria', code: 'bg' }, matchId: 4930748 },
+    { group: 'D', home: { name: 'Russia',        code: 'ru' }, away: { name: 'Estonia',  code: 'ee' }, matchId: 4930749 },
+    { group: 'E', home: { name: 'France',        code: 'fr' }, away: { name: 'Mexico',   code: 'mx' }, matchId: 4930751 },
+  ];
+
+  async function downloadReplay(matchId, btn) {
+    btn.disabled = true;
+    btn.textContent = 'Downloading…';
+    try {
+      const resp = await fetch(`https://aiarena.superskill.me/api/replay/${matchId}`, { method: 'POST' });
+      if (!resp.ok) throw new Error('Request failed');
+      const { replay } = await resp.json();
+      window.location.href = replay;
+      btn.textContent = 'Downloaded ✓';
+    } catch (e) {
+      btn.textContent = 'Error — retry';
+      btn.disabled = false;
+    }
+  }
+
+  (function buildOverlay() {
+    setTimeout(function() { window.scrollTo(0, 0); }, 200);
+    document.body.style.overflow = 'hidden';
+
+    document.getElementById('overlay-inner').style.marginTop = '230px';
+    const container = document.getElementById('overlay-matches');
+    const groups = {};
+    MATCHDAY1.forEach(m => { if (!groups[m.group]) groups[m.group] = []; groups[m.group].push(m); });
+
+    const blockMap = {};
+    Object.entries(groups).forEach(([group, matches]) => {
+      const block = document.createElement('div');
+      block.className = 'overlay-group-block';
+      let cardsHtml = '';
+      matches.forEach(m => {
+        cardsHtml += `
+          <div class="overlay-match-card">
+            <div class="overlay-matchup">
+              <div class="overlay-nation">
+                <img src="https://flagcdn.com/32x24/${m.home.code}.png" width="32" height="24" alt="${m.home.name}"/>
+                <span class="overlay-nation-name">${m.home.name}</span>
+              </div>
+              <span class="overlay-vs">vs</span>
+              <div class="overlay-nation">
+                <img src="https://flagcdn.com/32x24/${m.away.code}.png" width="32" height="24" alt="${m.away.name}"/>
+                <span class="overlay-nation-name">${m.away.name}</span>
+              </div>
+            </div>
+            <button class="overlay-replay ${m.matchId ? 'available' : 'pending'}"
+              ${m.matchId ? `onclick="downloadReplay('${m.matchId}', this)"` : 'disabled'}>
+              ${m.matchId ? '⬇ Download Replay File' : 'Replay File Not Available Yet'}
+            </button>
+          </div>`;
+      });
+      block.innerHTML = `
+        <div class="overlay-group-label">★ Group ${group}</div>
+        <div class="overlay-group-matches${matches.length === 1 ? ' single' : ''}">${cardsHtml}</div>`;
+      blockMap[group] = block;
+    });
+
+    ['A', 'B', 'C'].forEach(g => blockMap[g] && container.appendChild(blockMap[g]));
+
+    const deRow = document.createElement('div');
+    deRow.style.cssText = 'display:flex;gap:12px;width:100%';
+    ['D', 'E'].forEach(g => {
+      if (blockMap[g]) { blockMap[g].style.flex = '1'; deRow.appendChild(blockMap[g]); }
+    });
+    if (deRow.children.length) container.appendChild(deRow);
+  })();
+</script>
 
 <!-- ══ HEADER ══════════════════════════════════════════════ -->
 <header>
@@ -938,23 +1151,23 @@
           <tbody>
             <tr class="qualifier">
               <td><div class="team-cell"><img src="https://flagcdn.com/20x15/gb.png" alt="Great Britain" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Great Britain</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td>1</td><td>0</td><td>0</td><td class="pts">3</td>
+              <td><div class="matches-cell"><span class="match-circle w"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
             <tr class="qualifier">
               <td><div class="team-cell"><img src="https://flagcdn.com/20x15/fi.png" alt="Finland" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Finland</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td>1</td><td>0</td><td>0</td><td class="pts">3</td>
+              <td><div class="matches-cell"><span class="match-circle w"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
             <tr>
               <td><div class="team-cell"><img src="https://flagcdn.com/20x15/pl.png" alt="Poland" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Poland</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td>0</td><td>1</td><td>0</td><td class="pts">0</td>
+              <td><div class="matches-cell"><span class="match-circle l"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
             <tr>
               <td><div class="team-cell"><img src="https://flagcdn.com/20x15/es.png" alt="Spain" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Spain</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td>0</td><td>1</td><td>0</td><td class="pts">0</td>
+              <td><div class="matches-cell"><span class="match-circle l"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
           </tbody>
         </table>
@@ -977,23 +1190,23 @@
           <tbody>
             <tr class="qualifier">
               <td><div class="team-cell"><img src="https://flagcdn.com/20x15/ca.png" alt="Canada" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Canada</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td>1</td><td>0</td><td>0</td><td class="pts">3</td>
+              <td><div class="matches-cell"><span class="match-circle w"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
             <tr class="qualifier">
               <td><div class="team-cell"><img src="https://flagcdn.com/20x15/nl.png" alt="Netherlands" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Netherlands</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td>1</td><td>0</td><td>0</td><td class="pts">3</td>
+              <td><div class="matches-cell"><span class="match-circle w"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
             <tr>
               <td><div class="team-cell"><img src="https://flagcdn.com/20x15/us.png" alt="USA" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">USA</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td>0</td><td>1</td><td>0</td><td class="pts">0</td>
+              <td><div class="matches-cell"><span class="match-circle l"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
             <tr>
               <td><div class="team-cell"><img src="https://flagcdn.com/20x15/tw.png" alt="Taiwan" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Taiwan</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td>0</td><td>1</td><td>0</td><td class="pts">0</td>
+              <td><div class="matches-cell"><span class="match-circle l"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
           </tbody>
         </table>
@@ -1016,23 +1229,23 @@
           <tbody>
             <tr class="qualifier">
               <td><div class="team-cell"><img src="https://flagcdn.com/20x15/se.png" alt="Sweden" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Sweden</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td>1</td><td>0</td><td>0</td><td class="pts">3</td>
+              <td><div class="matches-cell"><span class="match-circle w"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
             <tr class="qualifier">
               <td><div class="team-cell"><img src="https://flagcdn.com/20x15/br.png" alt="Brazil" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Brazil</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td>1</td><td>0</td><td>0</td><td class="pts">3</td>
+              <td><div class="matches-cell"><span class="match-circle w"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
             <tr>
               <td><div class="team-cell"><img src="https://flagcdn.com/20x15/bg.png" alt="Bulgaria" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Bulgaria</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td>0</td><td>1</td><td>0</td><td class="pts">0</td>
+              <td><div class="matches-cell"><span class="match-circle l"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
             <tr>
               <td><div class="team-cell"><img src="https://flagcdn.com/20x15/cz.png" alt="Czechia" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Czechia</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td>0</td><td>1</td><td>0</td><td class="pts">0</td>
+              <td><div class="matches-cell"><span class="match-circle l"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
           </tbody>
         </table>
@@ -1054,19 +1267,19 @@
           </thead>
           <tbody>
             <tr class="qualifier">
-              <td><div class="team-cell"><img src="https://flagcdn.com/20x15/de.png" alt="Germany" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Germany</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td><div class="team-cell"><img src="https://flagcdn.com/20x15/ru.png" alt="Russia" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Russia</span></div></td>
+              <td>1</td><td>0</td><td>0</td><td class="pts">3</td>
+              <td><div class="matches-cell"><span class="match-circle w"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
             <tr class="qualifier">
-              <td><div class="team-cell"><img src="https://flagcdn.com/20x15/ru.png" alt="Russia" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Russia</span></div></td>
+              <td><div class="team-cell"><img src="https://flagcdn.com/20x15/de.png" alt="Germany" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Germany</span></div></td>
               <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
               <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
             <tr>
               <td><div class="team-cell"><img src="https://flagcdn.com/20x15/ee.png" alt="Estonia" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Estonia</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td>0</td><td>1</td><td>0</td><td class="pts">0</td>
+              <td><div class="matches-cell"><span class="match-circle l"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
             <tr>
               <td style="height:35px;"><div class="team-cell"></div></td>
@@ -1093,19 +1306,19 @@
           </thead>
           <tbody>
             <tr class="qualifier">
-              <td><div class="team-cell"><img src="https://flagcdn.com/20x15/au.png" alt="Australia" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Australia</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td><div class="team-cell"><img src="https://flagcdn.com/20x15/fr.png" alt="France" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">France</span></div></td>
+              <td>1</td><td>0</td><td>0</td><td class="pts">3</td>
+              <td><div class="matches-cell"><span class="match-circle w"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
             <tr class="qualifier">
-              <td><div class="team-cell"><img src="https://flagcdn.com/20x15/fr.png" alt="France" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">France</span></div></td>
+              <td><div class="team-cell"><img src="https://flagcdn.com/20x15/au.png" alt="Australia" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Australia</span></div></td>
               <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
               <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
             <tr>
               <td><div class="team-cell"><img src="https://flagcdn.com/20x15/mx.png" alt="Mexico" style="display:inline-block;vertical-align:middle;border-radius:1px;flex-shrink:0;"/><span class="team-name-sm">Mexico</span></div></td>
-              <td>0</td><td>0</td><td>0</td><td class="pts">0</td>
-              <td><div class="matches-cell"><span class="match-circle"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
+              <td>0</td><td>1</td><td>0</td><td class="pts">0</td>
+              <td><div class="matches-cell"><span class="match-circle l"></span><span class="match-circle"></span><span class="match-circle"></span></div></td>
             </tr>
             <tr>
               <td style="height:35px;"><div class="team-cell"></div></td>
@@ -1178,58 +1391,58 @@
         </div>
         <div class="fixture-group-block">
           <div class="fixture-group-label">Group A</div>
-          <div class="fixture-row">
-            <div class="fixture-team"><img src="https://flagcdn.com/20x15/gb.png" alt=""/><span class="fixture-team-name">Great Britain</span></div>
+          <a href="https://aiarena.net/matches/4930742/" target="_blank" class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/gb.png" alt=""/><span class="fixture-team-name">Great Britain</span><span class="fixture-winner">★</span></div>
             <span class="fixture-vs">vs</span>
             <div class="fixture-team away"><img src="https://flagcdn.com/20x15/es.png" alt=""/><span class="fixture-team-name">Spain</span></div>
-          </div>
-          <div class="fixture-row">
-            <div class="fixture-team"><img src="https://flagcdn.com/20x15/fi.png" alt=""/><span class="fixture-team-name">Finland</span></div>
+          </a>
+          <a href="https://aiarena.net/matches/4930743/" target="_blank" class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/fi.png" alt=""/><span class="fixture-team-name">Finland</span><span class="fixture-winner">★</span></div>
             <span class="fixture-vs">vs</span>
             <div class="fixture-team away"><img src="https://flagcdn.com/20x15/pl.png" alt=""/><span class="fixture-team-name">Poland</span></div>
-          </div>
+          </a>
         </div>
         <div class="fixture-group-block">
           <div class="fixture-group-label">Group B</div>
-          <div class="fixture-row">
-            <div class="fixture-team"><img src="https://flagcdn.com/20x15/ca.png" alt=""/><span class="fixture-team-name">Canada</span></div>
+          <a href="https://aiarena.net/matches/4930745/" target="_blank" class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/ca.png" alt=""/><span class="fixture-team-name">Canada</span><span class="fixture-winner">★</span></div>
             <span class="fixture-vs">vs</span>
             <div class="fixture-team away"><img src="https://flagcdn.com/20x15/tw.png" alt=""/><span class="fixture-team-name">Taiwan</span></div>
-          </div>
-          <div class="fixture-row">
-            <div class="fixture-team"><img src="https://flagcdn.com/20x15/nl.png" alt=""/><span class="fixture-team-name">Netherlands</span></div>
+          </a>
+          <a href="https://aiarena.net/matches/4930746/" target="_blank" class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/nl.png" alt=""/><span class="fixture-team-name">Netherlands</span><span class="fixture-winner">★</span></div>
             <span class="fixture-vs">vs</span>
             <div class="fixture-team away"><img src="https://flagcdn.com/20x15/us.png" alt=""/><span class="fixture-team-name">USA</span></div>
-          </div>
+          </a>
         </div>
         <div class="fixture-group-block">
           <div class="fixture-group-label">Group C</div>
-          <div class="fixture-row">
-            <div class="fixture-team"><img src="https://flagcdn.com/20x15/se.png" alt=""/><span class="fixture-team-name">Sweden</span></div>
+          <a href="https://aiarena.net/matches/4930747/" target="_blank" class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/se.png" alt=""/><span class="fixture-team-name">Sweden</span><span class="fixture-winner">★</span></div>
             <span class="fixture-vs">vs</span>
             <div class="fixture-team away"><img src="https://flagcdn.com/20x15/cz.png" alt=""/><span class="fixture-team-name">Czechia</span></div>
-          </div>
-          <div class="fixture-row">
-            <div class="fixture-team"><img src="https://flagcdn.com/20x15/br.png" alt=""/><span class="fixture-team-name">Brazil</span></div>
+          </a>
+          <a href="https://aiarena.net/matches/4930748/" target="_blank" class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/br.png" alt=""/><span class="fixture-team-name">Brazil</span><span class="fixture-winner">★</span></div>
             <span class="fixture-vs">vs</span>
             <div class="fixture-team away"><img src="https://flagcdn.com/20x15/bg.png" alt=""/><span class="fixture-team-name">Bulgaria</span></div>
-          </div>
+          </a>
         </div>
         <div class="fixture-group-block">
           <div class="fixture-group-label">Group D</div>
-          <div class="fixture-row">
-            <div class="fixture-team"><img src="https://flagcdn.com/20x15/ru.png" alt=""/><span class="fixture-team-name">Russia</span></div>
+          <a href="https://aiarena.net/matches/4930749/" target="_blank" class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/ru.png" alt=""/><span class="fixture-team-name">Russia</span><span class="fixture-winner">★</span></div>
             <span class="fixture-vs">vs</span>
             <div class="fixture-team away"><img src="https://flagcdn.com/20x15/ee.png" alt=""/><span class="fixture-team-name">Estonia</span></div>
-          </div>
+          </a>
         </div>
         <div class="fixture-group-block">
           <div class="fixture-group-label">Group E</div>
-          <div class="fixture-row">
-            <div class="fixture-team"><img src="https://flagcdn.com/20x15/fr.png" alt=""/><span class="fixture-team-name">France</span></div>
+          <a href="https://aiarena.net/matches/4930751/" target="_blank" class="fixture-row">
+            <div class="fixture-team"><img src="https://flagcdn.com/20x15/fr.png" alt=""/><span class="fixture-team-name">France</span><span class="fixture-winner">★</span></div>
             <span class="fixture-vs">vs</span>
             <div class="fixture-team away"><img src="https://flagcdn.com/20x15/mx.png" alt=""/><span class="fixture-team-name">Mexico</span></div>
-          </div>
+          </a>
         </div>
       </div>
 
