@@ -785,8 +785,8 @@
 <!-- ══ MATCHDAY OVERLAY ════════════════════════════════════ -->
 <div id="overlay">
   <div id="overlay-inner">
-    <h2 id="overlay-title">It's Quarter-finals Day</h2>
-    <div id="overlay-subtitle">Knockout Stage · Best of 1 · UltraloveAIE_v2</div>
+    <h2 id="overlay-title">It's Semi-finals Day</h2>
+    <div id="overlay-subtitle">Knockout Stage · Best of 3 · UltraloveAIE_v2</div>
     <div id="overlay-matches"></div>
     <div id="overlay-footer">
       <button id="overlay-open-btn" onclick="document.getElementById('overlay').style.display='none'; document.body.style.overflow=''">
@@ -799,12 +799,8 @@
 
 <script>
   const MATCHDAY = [
-    { group: 'PI', home: { name: 'Canada',       code: 'ca' }, away: { name: 'Germany',     code: 'de' }, matchId: 4940666 },
-    { group: 'PI', home: { name: 'Brazil',       code: 'br' }, away: { name: 'Australia',   code: 'au' }, matchId: 4940667 },
-    { group: 'QF', home: { name: 'Great Britain',code: 'gb' }, away: { name: 'Winner PI 1', code: ''   }, matchId: '4941417' },
-    { group: 'QF', home: { name: 'Sweden',       code: 'se' }, away: { name: 'France',      code: 'fr' }, matchId: '4941411' },
-    { group: 'QF', home: { name: 'Netherlands',  code: 'nl' }, away: { name: 'Winner PI 2', code: ''   }, matchId: '4941418' },
-    { group: 'QF', home: { name: 'Russia',       code: 'ru' }, away: { name: 'Finland',     code: 'fi' }, matchId: '4941412' },
+    { group: 'SF', home: { name: 'Great Britain', code: 'gb' }, away: { name: 'France',  code: 'fr' }, matchIds: [4944659, 4944660, 4944661] },
+    { group: 'SF', home: { name: 'Netherlands',   code: 'nl' }, away: { name: 'Russia',  code: 'ru' }, matchIds: [4944656, 4944657, 4944658] },
   ];
 
   async function downloadReplay(matchId, btn) {
@@ -828,7 +824,7 @@
 
     document.getElementById('overlay-inner').style.marginTop = '230px';
     const container = document.getElementById('overlay-matches');
-    const groupLabels = { PI: '★ Play-ins (Best of 1)', QF: '★ Quarter-finals (Best of 1)' };
+    const groupLabels = { PI: '★ Play-ins (Best of 1)', QF: '★ Quarter-finals (Best of 1)', SF: '★ Semi-finals (Best of 3)' };
     const flagHtml = (team) => team.code
       ? `<img src="https://flagcdn.com/32x24/${team.code}.png" width="32" height="24" alt="${team.name}"/>`
       : `<span style="width:32px;height:24px;display:inline-block;"></span>`;
@@ -841,6 +837,14 @@
       block.className = 'overlay-group-block';
       let cardsHtml = '';
       matches.forEach(m => {
+        const ids = m.matchIds || (m.matchId ? [m.matchId] : [null]);
+        const buttons = ids.map((id, i) => {
+          const label = ids.length > 1 ? 'Game ' + (i + 1) + ' — ' : '';
+          return `<button class="overlay-replay ${id ? 'available' : 'pending'}"
+              ${id ? `onclick="downloadReplay('${id}', this)"` : 'disabled'}>
+              ${id ? '⬇ ' + label + 'Download Replay' : label + 'Replay Not Available Yet'}
+            </button>`;
+        }).join('');
         cardsHtml += `
           <div class="overlay-match-card">
             <div class="overlay-matchup">
@@ -854,10 +858,7 @@
                 <span class="overlay-nation-name">${m.away.name}</span>
               </div>
             </div>
-            <button class="overlay-replay ${m.matchId ? 'available' : 'pending'}"
-              ${m.matchId ? `onclick="downloadReplay('${m.matchId}', this)"` : 'disabled'}>
-              ${m.matchId ? '⬇ Download Replay File' : 'Replay File Not Available Yet'}
-            </button>
+            ${buttons}
           </div>`;
       });
       block.innerHTML = `
@@ -866,7 +867,7 @@
       blockMap[group] = block;
     });
 
-    ['PI', 'QF'].forEach(g => blockMap[g] && container.appendChild(blockMap[g]));
+    ['PI', 'QF', 'SF'].forEach(g => blockMap[g] && container.appendChild(blockMap[g]));
   })();
 </script>
 
@@ -1771,9 +1772,12 @@
         <text style="font:400 9px 'Segoe UI',Arial,sans-serif;fill:#4a6080;" x="453" y="94">28 Aug 2026</text>
         <image href="https://flagcdn.com/20x15/gb.png" x="447" y="97" width="20" height="15"/>
         <text class="team" x="469" y="108">Great Britain</text>
+        <a href="https://aiarena.net/matches/4944659/" target="_blank"><text style="font:700 11px 'Segoe UI',Arial,sans-serif;fill:#ffd700;" x="585" y="108">★</text></a>
+        <a href="https://aiarena.net/matches/4944660/" target="_blank"><text style="font:700 11px 'Segoe UI',Arial,sans-serif;fill:#ffd700;" x="598" y="108">★</text></a>
+        <a href="https://aiarena.net/matches/4944661/" target="_blank"><text style="font:700 11px 'Segoe UI',Arial,sans-serif;fill:#ffd700;" x="611" y="108">★</text></a>
         <line x1="445" y1="115" x2="630" y2="115" stroke="#1e3050" stroke-width="0.8"/>
         <image href="https://flagcdn.com/20x15/fr.png" x="447" y="111" width="20" height="15"/>
-        <text class="team" x="469" y="122">France</text>
+        <text class="team" x="469" y="122" style="fill:#4a6080;">France</text>
 
         <!-- ─── SF2: Winner QF3 vs Winner QF4 ─── y=330 -->
         <rect class="mb-bg" x="445" y="330" width="185" height="58" rx="4"/>
@@ -1782,9 +1786,12 @@
         <text style="font:400 9px 'Segoe UI',Arial,sans-serif;fill:#4a6080;" x="453" y="354">28 Aug 2026</text>
         <image href="https://flagcdn.com/20x15/nl.png" x="447" y="357" width="20" height="15"/>
         <text class="team" x="469" y="368">Netherlands</text>
+        <a href="https://aiarena.net/matches/4944656/" target="_blank"><text style="font:700 11px 'Segoe UI',Arial,sans-serif;fill:#ffd700;" x="585" y="368">★</text></a>
+        <a href="https://aiarena.net/matches/4944657/" target="_blank"><text style="font:700 11px 'Segoe UI',Arial,sans-serif;fill:#ffd700;" x="598" y="368">★</text></a>
+        <a href="https://aiarena.net/matches/4944658/" target="_blank"><text style="font:700 11px 'Segoe UI',Arial,sans-serif;fill:#ffd700;" x="611" y="368">★</text></a>
         <line x1="445" y1="375" x2="630" y2="375" stroke="#1e3050" stroke-width="0.8"/>
         <image href="https://flagcdn.com/20x15/ru.png" x="447" y="371" width="20" height="15"/>
-        <text class="team" x="469" y="382">Russia</text>
+        <text class="team" x="469" y="382" style="fill:#4a6080;">Russia</text>
 
         <!-- SF1 + SF2 connectors → GF (midpoint y=229) -->
         <path class="connector" d="M 630 99 H 645 V 359"/>
@@ -1796,9 +1803,11 @@
         <rect x="660" y="200" width="210" height="16" rx="4" fill="rgba(255,215,0,0.12)" stroke="none"/>
         <text class="lbl" x="668" y="211" style="fill:#ffd700;">GRAND FINAL (Bo5)</text>
         <text style="font:400 9px 'Segoe UI',Arial,sans-serif;fill:#8a7020;" x="668" y="224">30 Aug 2026</text>
-        <text class="team" x="674" y="238">Winner SF1</text>
+        <image href="https://flagcdn.com/20x15/gb.png" x="662" y="227" width="20" height="15"/>
+        <text class="team" x="684" y="238">Great Britain</text>
         <line x1="660" y1="245" x2="870" y2="245" stroke="#2a3a50" stroke-width="0.8"/>
-        <text class="team" x="674" y="252">Winner SF2</text>
+        <image href="https://flagcdn.com/20x15/nl.png" x="662" y="241" width="20" height="15"/>
+        <text class="team" x="684" y="252">Netherlands</text>
 
         <!-- ─── CHAMPION ─── -->
         <line x1="765" y1="258" x2="765" y2="275" stroke="#ffd700" stroke-width="1" stroke-dasharray="3 3"/>
