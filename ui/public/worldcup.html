@@ -785,8 +785,8 @@
 <!-- ══ MATCHDAY OVERLAY ════════════════════════════════════ -->
 <div id="overlay">
   <div id="overlay-inner">
-    <h2 id="overlay-title">It's Semi-finals Day</h2>
-    <div id="overlay-subtitle">Knockout Stage · Best of 3 · UltraloveAIE_v2</div>
+    <h2 id="overlay-title">It's the Grand Final!</h2>
+    <div id="overlay-subtitle">Grand Final · Best of 5 · UltraloveAIE_v2</div>
     <div id="overlay-matches"></div>
     <div id="overlay-footer">
       <button id="overlay-open-btn" onclick="document.getElementById('overlay').style.display='none'; document.body.style.overflow=''">
@@ -799,8 +799,7 @@
 
 <script>
   const MATCHDAY = [
-    { group: 'SF', home: { name: 'Great Britain', code: 'gb' }, away: { name: 'France',  code: 'fr' }, matchIds: [4944659, 4944660, 4944661] },
-    { group: 'SF', home: { name: 'Netherlands',   code: 'nl' }, away: { name: 'Russia',  code: 'ru' }, matchIds: [4944656, 4944657, 4944658] },
+    { group: 'GF', home: { name: 'Great Britain', code: 'gb' }, away: { name: 'Netherlands', code: 'nl' }, matchIds: [4949618, 4949619, 4949620, 4949621, 4949622] },
   ];
 
   async function downloadReplay(matchId, btn) {
@@ -824,7 +823,7 @@
 
     document.getElementById('overlay-inner').style.marginTop = '230px';
     const container = document.getElementById('overlay-matches');
-    const groupLabels = { PI: '★ Play-ins (Best of 1)', QF: '★ Quarter-finals (Best of 1)', SF: '★ Semi-finals (Best of 3)' };
+    const groupLabels = { PI: '★ Play-ins (Best of 1)', QF: '★ Quarter-finals (Best of 1)', SF: '★ Semi-finals (Best of 3)', GF: '★ Grand Final (Best of 5)' };
     const flagHtml = (team) => team.code
       ? `<img src="https://flagcdn.com/32x24/${team.code}.png" width="32" height="24" alt="${team.name}"/>`
       : `<span style="width:32px;height:24px;display:inline-block;"></span>`;
@@ -867,7 +866,7 @@
       blockMap[group] = block;
     });
 
-    ['PI', 'QF', 'SF'].forEach(g => blockMap[g] && container.appendChild(blockMap[g]));
+    ['PI', 'QF', 'SF', 'GF'].forEach(g => blockMap[g] && container.appendChild(blockMap[g]));
   })();
 </script>
 
@@ -1804,15 +1803,20 @@
         <text class="lbl" x="668" y="211" style="fill:#ffd700;">GRAND FINAL (Bo5)</text>
         <text style="font:400 9px 'Segoe UI',Arial,sans-serif;fill:#8a7020;" x="668" y="224">30 Aug 2026</text>
         <image href="https://flagcdn.com/20x15/gb.png" x="662" y="227" width="20" height="15"/>
-        <text class="team" x="684" y="238">Great Britain</text>
+        <text class="team" x="684" y="238" style="fill:#4a6080;">Great Britain</text>
         <line x1="660" y1="245" x2="870" y2="245" stroke="#2a3a50" stroke-width="0.8"/>
         <image href="https://flagcdn.com/20x15/nl.png" x="662" y="241" width="20" height="15"/>
         <text class="team" x="684" y="252">Netherlands</text>
+        <a href="https://aiarena.net/matches/4949618/" target="_blank"><text style="font:700 11px 'Segoe UI',Arial,sans-serif;fill:#ffd700;" x="762" y="252">★</text></a>
+        <a href="https://aiarena.net/matches/4949619/" target="_blank"><text style="font:700 11px 'Segoe UI',Arial,sans-serif;fill:#ffd700;" x="775" y="252">★</text></a>
+        <a href="https://aiarena.net/matches/4949620/" target="_blank"><text style="font:700 11px 'Segoe UI',Arial,sans-serif;fill:#ffd700;" x="788" y="252">★</text></a>
+        <a href="https://aiarena.net/matches/4949621/" target="_blank"><text style="font:700 11px 'Segoe UI',Arial,sans-serif;fill:#ffd700;" x="801" y="252">★</text></a>
+        <a href="https://aiarena.net/matches/4949622/" target="_blank"><text style="font:700 11px 'Segoe UI',Arial,sans-serif;fill:#ffd700;" x="814" y="252">★</text></a>
 
         <!-- ─── CHAMPION ─── -->
         <line x1="765" y1="258" x2="765" y2="275" stroke="#ffd700" stroke-width="1" stroke-dasharray="3 3"/>
         <rect class="winner-slot" x="715" y="275" width="100" height="26" rx="4"/>
-        <text class="winner-lbl" x="765" y="292" text-anchor="middle">🏆 Champion</text>
+        <text class="winner-lbl" x="765" y="292" text-anchor="middle">🏆 Netherlands</text>
 
       </svg>
     </div>
