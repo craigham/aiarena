@@ -1,11 +1,16 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import test from "node:test";
 import {
+  assertReplayRoot,
   durationLoops,
   lastLoopFromReplay,
   mapBaseName,
   opponentLabel,
   playerRace,
+  resolveReplayPath,
   shouldSkip,
   testBotName,
   toMatchDocument,
@@ -187,4 +192,41 @@ test("a parsed replay stores overview, timeline, and the success attempt", () =>
   assert.equal(doc.parseAttempts, 2);
   assert.deepEqual(doc.overview, { players: {} });
   assert.deepEqual(doc.timeline, { version: 1, list: [{ type: "stats" }] });
+});
+
+function tempRoot() {
+  return fs.mkdtempSync(path.join(os.tmpdir(), "kibitz-"));
+}
+
+test("a runs replay wins and filenames sort", () => {
+  const root = tempRoot();
+  const runs = path.join(root, "runs", "9", "replays");
+  fs.mkdirSync(runs, { recursive: true });
+  fs.mkdirSync(path.join(root, "blizzard_ai_runs"), { recursive: true });
+  fs.writeFileSync(path.join(runs, "b.SC2Replay"), "");
+  fs.writeFileSync(path.join(runs, "a.SC2Replay"), "");
+  fs.writeFileSync(path.join(root, "blizzard_ai_runs", "9_ai.SC2Replay"), "");
+  assert.equal(resolveReplayPath(root, 9), path.join(runs, "a.SC2Replay"));
+});
+
+test("blizzard replays are used when the runs directory has none", () => {
+  const root = tempRoot();
+  const blizzard = path.join(root, "blizzard_ai_runs");
+  fs.mkdirSync(blizzard, { recursive: true });
+  fs.writeFileSync(path.join(blizzard, "9_b.SC2Replay"), "");
+  fs.writeFileSync(path.join(blizzard, "9_a.SC2Replay"), "");
+  fs.writeFileSync(path.join(blizzard, "10_a.SC2Replay"), "");
+  assert.equal(resolveReplayPath(root, 9), path.join(blizzard, "9_a.SC2Replay"));
+});
+
+test("a missing replay file returns null", () => {
+  const root = tempRoot();
+  fs.mkdirSync(path.join(root, "runs", "4", "replays"), { recursive: true });
+  assert.equal(resolveReplayPath(root, 4), null);
+});
+
+test("a missing replay root throws before any write", () => {
+  const root = tempRoot();
+  assert.throws(() => assertReplayRoot(path.join(root, "missing")), /TEST_LAB_REPLAY_ROOT/);
+  assert.doesNotThrow(() => assertReplayRoot(root));
 });

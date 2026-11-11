@@ -1,3 +1,6 @@
+import fs from "node:fs";
+import path from "node:path";
+
 const LOOPS_PER_SECOND = 22.4;
 export const NO_REPLAY = "No replay file.";
 export const PARSE_FAILED = "Failed to parse replay file.";
@@ -115,4 +118,26 @@ export function toMatchDocument(row, parsed) {
   if (parsed && parsed.overview) doc.overview = parsed.overview;
   if (parsed && parsed.timeline) doc.timeline = { version: 1, list: parsed.timeline };
   return doc;
+}
+
+export function assertReplayRoot(root) {
+  if (!root || !fs.existsSync(root) || !fs.statSync(root).isDirectory()) {
+    throw new Error("TEST_LAB_REPLAY_ROOT is not a directory: " + root);
+  }
+}
+
+function firstReplay(directory, prefix) {
+  if (!fs.existsSync(directory) || !fs.statSync(directory).isDirectory()) return null;
+  const names = fs.readdirSync(directory)
+    .filter(name => name.endsWith(".SC2Replay") && (!prefix || name.startsWith(prefix)))
+    .sort();
+  if (!names.length) return null;
+  return path.join(directory, names[0]);
+}
+
+export function resolveReplayPath(root, matchId) {
+  const id = String(matchId);
+  const fromRuns = firstReplay(path.join(root, "runs", id, "replays"));
+  if (fromRuns) return fromRuns;
+  return firstReplay(path.join(root, "blizzard_ai_runs"), id + "_");
 }
