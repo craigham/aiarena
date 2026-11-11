@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 
-const COMPETITION = 37;
+const COMPETITION = Number(process.env.COMPETITION || 1);
 const START_ROUND = 0;
 
 const client = new MongoClient("mongodb://mongo:27017");
