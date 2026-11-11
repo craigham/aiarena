@@ -1,5 +1,4 @@
 import * as React from "react";
-import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -72,7 +71,6 @@ export default function Match({ bot, match }) {
         Time: { new Date(match.time).toLocaleString() } &nbsp;
         Map: { match.map } &nbsp;
         Duration: { clock(match.duration) } &nbsp;
-        <Link href={ "https://aiarena.net/matches/" + match.match } target="_blank" rel="noopener">Download replay</Link> &nbsp;
         { match.warnings.join(" ") } &nbsp;
       </div>
 
