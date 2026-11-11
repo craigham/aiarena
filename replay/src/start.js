@@ -32,13 +32,15 @@ async function go() {
       buildOverview: (replay, timeline) => getOverview(replay, timeline),
     });
     console.log(new Date().toISOString(), "Done.");
-    process.exit(0);
+    process.exitCode = 0;
   } catch (error) {
     console.log(error && error.message ? error.message : error);
-    process.exit(1);
+    process.exitCode = 1;
   } finally {
     await pool.end();
   }
 }
 
-go();
+go().then(() => {
+  process.exit(process.exitCode || 0);
+});
