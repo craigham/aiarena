@@ -11,6 +11,7 @@ import {
   opponentLabel,
   playerRace,
   resolveReplayPath,
+  selectFinishedMatches,
   shouldSkip,
   testBotName,
   toMatchDocument,
@@ -229,4 +230,19 @@ test("a missing replay root throws before any write", () => {
   const root = tempRoot();
   assert.throws(() => assertReplayRoot(path.join(root, "missing")), /TEST_LAB_REPLAY_ROOT/);
   assert.doesNotThrow(() => assertReplayRoot(root));
+});
+
+test("selectFinishedMatches runs the finished-match SQL in id order", async () => {
+  let seen;
+  const rows = [{ id: 1 }];
+  const result = await selectFinishedMatches(async (sql, params) => {
+    seen = { sql, params };
+    return rows;
+  });
+  assert.equal(result, rows);
+  assert.deepEqual(seen.params, []);
+  assert.match(seen.sql, /m.test_group_id >= 0/);
+  assert.match(seen.sql, /'Victory', 'Defeat', 'Tie', 'Crash'/);
+  assert.match(seen.sql, /ORDER BY m.id ASC/);
+  assert.doesNotMatch(seen.sql, /Pending/);
 });

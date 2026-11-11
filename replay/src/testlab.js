@@ -141,3 +141,34 @@ export function resolveReplayPath(root, matchId) {
   if (fromRuns) return fromRuns;
   return firstReplay(path.join(root, "blizzard_ai_runs"), id + "_");
 }
+
+export const FINISHED_MATCHES_SQL = `
+SELECT
+  m.id,
+  m.test_group_id,
+  m.map_name,
+  m.result,
+  m.duration_in_game_time,
+  m.start_timestamp,
+  m.opponent_race,
+  m.opponent_build,
+  m.opponent_commit_hash,
+  m.friendly_race,
+  tb.name AS test_bot_name,
+  tb.race AS test_bot_race,
+  tb.bot_directory AS test_bot_directory,
+  ob.name AS opponent_bot_name,
+  ob.race AS opponent_bot_race,
+  rt.name AS replay_test_name
+FROM match m
+LEFT JOIN custom_bot tb ON tb.id = m.test_bot_id
+LEFT JOIN custom_bot ob ON ob.id = m.opponent_bot_id
+LEFT JOIN replay_test rt ON rt.id = m.replay_test_id
+WHERE m.test_group_id >= 0
+  AND m.result IN ('Victory', 'Defeat', 'Tie', 'Crash')
+ORDER BY m.id ASC
+`;
+
+export async function selectFinishedMatches(query) {
+  return await query(FINISHED_MATCHES_SQL, []);
+}
