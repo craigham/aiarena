@@ -6,9 +6,12 @@ import test from "node:test";
 import {
   assertReplayRoot,
   durationLoops,
+  importTestLabMatches,
   lastLoopFromReplay,
   mapBaseName,
+  NO_REPLAY,
   opponentLabel,
+  PARSE_FAILED,
   playerRace,
   resolveReplayPath,
   selectFinishedMatches,
@@ -245,4 +248,132 @@ test("selectFinishedMatches runs the finished-match SQL in id order", async () =
   assert.match(seen.sql, /'Victory', 'Defeat', 'Tie', 'Crash'/);
   assert.match(seen.sql, /ORDER BY m.id ASC/);
   assert.doesNotMatch(seen.sql, /Pending/);
+});
+
+function sampleRow(id, result) {
+  return {
+    id,
+    test_group_id: 90,
+    map_name: "LeyLinesAIE_v2",
+    result,
+    duration_in_game_time: 60,
+    start_timestamp: "2026-11-06T12:00:00.000Z",
+    test_bot_name: "t-bone",
+    test_bot_race: "Terran",
+    friendly_race: "Terran",
+    opponent_race: "Zerg",
+    opponent_build: "Rush",
+  };
+}
+
+function writeReplay(root, id) {
+  const dir = path.join(root, "runs", String(id), "replays");
+  fs.mkdirSync(dir, { recursive: true });
+  const file = path.join(dir, id + ".SC2Replay");
+  fs.writeFileSync(file, "");
+  return file;
+}
+
+test("a bad replay root writes nothing", async () => {
+  const stored = [];
+  await assert.rejects(() => importTestLabMatches({
+    replayRoot: path.join(tempRoot(), "missing"),
+    query: async () => { throw new Error("query should not run"); },
+    findMatch: async () => null,
+    storeMatch: async (doc) => stored.push(doc),
+    storeRanking: async () => {},
+    loadReplay: async () => { throw new Error("load should not run"); },
+    buildTimeline: async () => [],
+    buildOverview: () => ({}),
+  }));
+  assert.equal(stored.length, 0);
+});
+
+test("no replay file is stored once and then skipped", async () => {
+  const root = tempRoot();
+  fs.mkdirSync(root, { recursive: true });
+  const stored = [];
+  let existing = null;
+  const deps = {
+    replayRoot: root,
+    query: async () => [sampleRow(3, "Victory")],
+    findMatch: async () => existing,
+    storeMatch: async (doc) => { stored.push(doc); existing = doc; },
+    storeRanking: async () => {},
+    loadReplay: async () => { throw new Error("load should not run"); },
+    buildTimeline: async () => [],
+    buildOverview: () => ({}),
+  };
+  await importTestLabMatches(deps);
+  await importTestLabMatches(deps);
+  assert.equal(stored.length, 1);
+  assert.deepEqual(stored[0].warnings, [NO_REPLAY]);
+  assert.equal(stored[0].parseAttempts, 0);
+});
+
+test("a parse failure does not stop the next match and retries until 3", async () => {
+  const root = tempRoot();
+  writeReplay(root, 1);
+  writeReplay(root, 2);
+  const stored = [];
+  const found = new Map();
+  await importTestLabMatches({
+    replayRoot: root,
+    query: async () => [sampleRow(1, "Victory"), sampleRow(2, "Defeat")],
+    findMatch: async (id) => found.get(id) || null,
+    storeMatch: async (doc) => { stored.push(doc); found.set(doc.match, doc); },
+    storeRanking: async () => {},
+    loadReplay: async (file) => {
+      if (file.includes("/1/")) throw new Error("boom");
+      return { side: 1, warnings: new Set(), events: [{ loop: 80 }] };
+    },
+    buildTimeline: async () => [{ type: "stats" }],
+    buildOverview: () => ({ players: { 1: {}, 2: {} } }),
+  });
+  const first = stored.find(doc => doc.match === 1);
+  const second = stored.find(doc => doc.match === 2);
+  assert.deepEqual(first.warnings, [PARSE_FAILED]);
+  assert.equal(first.parseAttempts, 1);
+  assert.equal(second.winner, "Zerg Rush");
+  assert.equal(second.duration, 80);
+  assert.equal(second.parseAttempts, 1);
+  assert.deepEqual(second.warnings, []);
+  assert.deepEqual(second.timeline, { version: 1, list: [{ type: "stats" }] });
+
+  stored.length = 0;
+  found.set(1, { warnings: [PARSE_FAILED], parseAttempts: 2 });
+  await importTestLabMatches({
+    replayRoot: root,
+    query: async () => [sampleRow(1, "Victory")],
+    findMatch: async (id) => found.get(id) || null,
+    storeMatch: async (doc) => { stored.push(doc); found.set(doc.match, doc); },
+    storeRanking: async () => {},
+    loadReplay: async () => { throw new Error("still bad"); },
+    buildTimeline: async () => [],
+    buildOverview: () => ({}),
+  });
+  assert.equal(stored[0].parseAttempts, 3);
+  assert.equal(shouldSkip(stored[0]), true);
+});
+
+test("a successful retry clears the parse failure and keeps parser warnings", async () => {
+  const root = tempRoot();
+  writeReplay(root, 7);
+  const stored = [];
+  await importTestLabMatches({
+    replayRoot: root,
+    query: async () => [sampleRow(7, "Tie")],
+    findMatch: async () => ({ warnings: [PARSE_FAILED], parseAttempts: 1 }),
+    storeMatch: async (doc) => stored.push(doc),
+    storeRanking: async (ranking) => stored.push(ranking),
+    loadReplay: async () => ({ side: 1, warnings: new Set(["Unable to read some of the game events!"]), events: [{ loop: 10 }] }),
+    buildTimeline: async () => [],
+    buildOverview: () => ({ players: {} }),
+  });
+  const match = stored.find(doc => doc.match === 7);
+  assert.equal(match.parseAttempts, 2);
+  assert.deepEqual(match.warnings, ["Unable to read some of the game events!"]);
+  assert.equal(match.winner, "");
+  assert.equal(stored.some(doc => doc.bot === "t-bone" && doc.race === "Terran" && doc.division === 1), true);
+  assert.equal(stored.some(doc => doc.bot === "Zerg Rush" && doc.race === "Zerg"), true);
 });

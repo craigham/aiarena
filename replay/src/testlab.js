@@ -172,3 +172,48 @@ ORDER BY m.id ASC
 export async function selectFinishedMatches(query) {
   return await query(FINISHED_MATCHES_SQL, []);
 }
+
+async function storeBothRankings(storeRanking, row) {
+  await storeRanking(toRanking(testBotName(row), playerRace(row, "player1")));
+  await storeRanking(toRanking(opponentLabel(row), playerRace(row, "player2")));
+}
+
+export async function importTestLabMatches(deps) {
+  assertReplayRoot(deps.replayRoot);
+  const rows = await selectFinishedMatches(deps.query);
+  for (const row of rows) {
+    const existing = await deps.findMatch(row.id);
+    if (shouldSkip(existing)) continue;
+    const previousAttempts = existing && Number.isFinite(Number(existing.parseAttempts))
+      ? Number(existing.parseAttempts)
+      : 0;
+    let doc;
+    try {
+      const replayPath = resolveReplayPath(deps.replayRoot, row.id);
+      if (!replayPath) {
+        doc = toMatchDocument(row, null);
+      } else {
+        const replay = await deps.loadReplay(replayPath);
+        const timeline = await deps.buildTimeline({ id: row.id, replay: replayPath });
+        const overview = await deps.buildOverview(replay, timeline);
+        doc = toMatchDocument(row, {
+          side: replay.side || 0,
+          warnings: replay.warnings ? [...replay.warnings] : [],
+          overview,
+          timeline,
+          lastLoop: lastLoopFromReplay(replay),
+          replayPath,
+          parseAttempts: previousAttempts + 1,
+        });
+      }
+    } catch (error) {
+      console.log(error && error.message ? error.message : error);
+      doc = toMatchDocument(row, {
+        warnings: [PARSE_FAILED],
+        parseAttempts: previousAttempts + 1,
+      });
+    }
+    await deps.storeMatch(doc);
+    await storeBothRankings(deps.storeRanking, row);
+  }
+}
