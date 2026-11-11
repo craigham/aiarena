@@ -160,7 +160,7 @@ SELECT
   ob.name AS opponent_bot_name,
   ob.race AS opponent_bot_race,
   rt.name AS replay_test_name
-FROM match m
+FROM \`match\` m
 LEFT JOIN custom_bot tb ON tb.id = m.test_bot_id
 LEFT JOIN custom_bot ob ON ob.id = m.opponent_bot_id
 LEFT JOIN replay_test rt ON rt.id = m.replay_test_id
