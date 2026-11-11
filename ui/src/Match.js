@@ -11,6 +11,7 @@ import { UnitIcon } from "./Army";
 import MatchCell from "./MatchCell";
 import Rating from "./Rating";
 import ReviewCard from "./match/ReviewCard";
+import { historyRows } from "./historyRows";
 
 const LOOPS_PER_SECOND = 22.4;
 const LOOPS_PER_MINUTE = LOOPS_PER_SECOND * 60;
@@ -120,37 +121,22 @@ function BotInfo({ info, winner }) {
 }
 
 function History({ bot, match }) {
-  const rounds = new Map();
   const rows = [];
   const cellsPerRow = Math.floor(window.innerWidth / 38);
-  let round = 1;
-  let count = 0;
   let key = 1;
 
-  for (const one of match.history) {
-    rounds.set(one.round, one);
-  }
-
-  while (count < match.history.length) {
+  for (const group of historyRows(match.history, cellsPerRow)) {
     const cells = [];
-    let countInRound = 0;
 
-    for (let c = 0; c < cellsPerRow; c++, round++) {
-      if (rounds.has(round)) {
-        count++;
-        countInRound++;
-      }
-
+    for (const one of group) {
       cells.push(
         <TableCell key={ key++ }>
-          <MatchCell bot={ bot } match={ rounds.get(round) } text={ round } />
+          <MatchCell bot={ bot } match={ one } text={ one.round } />
         </TableCell>
       );
     }
 
-    if (countInRound) {
-      rows.push(<TableRow key={ key++ }>{ cells }</TableRow>);
-    }
+    rows.push(<TableRow key={ key++ }>{ cells }</TableRow>);
   }
 
   return (

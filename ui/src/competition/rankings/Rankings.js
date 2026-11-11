@@ -9,6 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Army from "../../Army";
 import Rating from "../../Rating";
+import { compareRankings, formatWinRate } from "../../rankingDisplay";
 import { SmallScreen } from "../../screen";
 
 const HOUSEBOTS_AUTHOR = 133;
@@ -42,13 +43,7 @@ export default function Rankings({ rankings }) {
     if (BOT_REMOVED.has(one.id)) one.division = 0;
     return one;
   })
-  .sort(function(a, b) {
-    if (!a.division && !b.division) return a.bot.localeCompare(b.bot);
-    if (!a.division) return 1;
-    if (!b.division) return -1;
-
-    return (a.division !== b.division) ? a.division - b.division : b.elo - a.elo;
-  });
+  .sort(compareRankings);
 
   const cols = SmallScreen ? 4 : 8;
   const rows = [];
@@ -88,14 +83,14 @@ export default function Rankings({ rankings }) {
         <Link to={ path } style={ botNameStyle }>{ bot }</Link>
         { botNameAppendix }
       </TableCell>,
-      <TableCell key="3">{ one.winRate.toFixed(2) }%</TableCell>,
-      <TableCell key="4">{ one.elo }</TableCell>,
+      <TableCell key="3">{ formatWinRate(one.winRate) }</TableCell>,
+      <TableCell key="4">{ Number.isFinite(one.elo) ? one.elo : "" }</TableCell>,
     ];
     if (!SmallScreen) {
       rowCells.push(
         <TableCell key="5">
           <div style={{ display: "flex", alignItems: "center", minWidth: "320px" }}>
-            <Army army={ one.armyBuild } />
+            <Army army={ one.armyBuild || [] } />
             <div>({ one.armyBuildWins || 0 } { (one.armyBuildWins === 1) ? "win" : "wins" })</div>
           </div>
         </TableCell>,
